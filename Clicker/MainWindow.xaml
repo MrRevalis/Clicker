@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Clicker"
         xmlns:resx="clr-namespace:Clicker.Properties"
+        xmlns:prop="clr-namespace:Clicker.AttachedProperties"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="200" Width="400">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="PreviewKeyDown">
+            <i:InvokeCommandAction Command="{Binding OnKeyClicked}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <StackPanel>
             <Grid>
@@ -48,11 +55,23 @@
                     Grid.Column="1"
                     Grid.Row="3"
                     Style="{StaticResource timeText}"
+                    prop:TimeProperty.TimeBox="{Binding Path=Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     ></TextBox>
+                <Label 
+                    Content="[ms]"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    HorizontalContentAlignment="Right"
+                    HorizontalAlignment="Right"
+                    Width="auto"
+                    FontSize="15"
+                    ></Label>
 
                 <Button 
                     Content="{Binding Source={x:Static resx:Resources.start}}"
-                    Grid.Row="4"></Button>
+                    Grid.Row="4"
+                    Command="{Binding Path=Start}"
+                    ></Button>
                 <Button
                     Content="{Binding Source={x:Static resx:Resources.stop}}"
                     Grid.Row="4"
