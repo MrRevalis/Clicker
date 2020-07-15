@@ -1,0 +1,63 @@
+﻿<Window x:Class="Clicker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clicker"
+        xmlns:resx="clr-namespace:Clicker.Properties"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="200" Width="400">
+    <Grid>
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <Label 
+                    Content="{Binding Source={x:Static resx:Resources.poz1}}"
+                    ></Label>
+                <TextBox
+                    Grid.Column="1"
+                    Style="{StaticResource mouseSpot}"
+                    ></TextBox>
+
+                <Label 
+                    Content="{Binding Source={x:Static resx:Resources.poz2}}"
+                    Grid.Row="1"
+                    ></Label>
+                <TextBox
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Style="{StaticResource mouseSpot}"
+                    ></TextBox>
+
+                <Label
+                    Content="{Binding Source={x:Static resx:Resources.czas}}"
+                    Grid.Row="3"
+                ></Label>
+                <TextBox
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    Style="{StaticResource timeText}"
+                    ></TextBox>
+
+                <Button 
+                    Content="{Binding Source={x:Static resx:Resources.start}}"
+                    Grid.Row="4"></Button>
+                <Button
+                    Content="{Binding Source={x:Static resx:Resources.stop}}"
+                    Grid.Row="4"
+                    Grid.Column="1"></Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

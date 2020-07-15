@@ -1,0 +1,17 @@
+C:\Users\Dominik\source\repos\Clicker\Clicker\bin\Debug\Clicker.exe.config
+C:\Users\Dominik\source\repos\Clicker\Clicker\bin\Debug\Clicker.exe
+C:\Users\Dominik\source\repos\Clicker\Clicker\bin\Debug\Clicker.pdb
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker.csprojAssemblyReference.cache
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\MainWindow.g.cs
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\App.g.cs
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker_MarkupCompile.cache
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker_MarkupCompile.lref
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\MainWindow.baml
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker.g.resources
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker.Properties.Resources.resources
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker.csproj.GenerateResource.cache
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker.csproj.CoreCompileInputs.cache
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker.exe
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker.pdb
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\App.baml
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Style\Style.baml
