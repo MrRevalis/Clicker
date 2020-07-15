@@ -38,3 +38,9 @@ C:\Users\Dominik\OneDrive\Pulpit\ClickerSWTOR\Clicker\bin\Debug\System.Windows.I
 C:\Users\Dominik\OneDrive\Pulpit\ClickerSWTOR\Clicker\bin\Debug\Microsoft.Expression.Interactions.xml
 C:\Users\Dominik\OneDrive\Pulpit\ClickerSWTOR\Clicker\bin\Debug\System.Windows.Interactivity.xml
 C:\Users\Dominik\OneDrive\Pulpit\ClickerSWTOR\Clicker\obj\Debug\Clicker.csproj.CopyComplete
+C:\Users\Dominik\source\repos\Clicker\Clicker\bin\Debug\Microsoft.Expression.Interactions.dll
+C:\Users\Dominik\source\repos\Clicker\Clicker\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\Dominik\source\repos\Clicker\Clicker\bin\Debug\Microsoft.Expression.Interactions.xml
+C:\Users\Dominik\source\repos\Clicker\Clicker\bin\Debug\System.Windows.Interactivity.xml
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker.csproj.CopyComplete

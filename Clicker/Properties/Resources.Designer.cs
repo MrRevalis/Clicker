@@ -70,7 +70,7 @@ namespace Clicker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pozycja 1 |F1|.
+        ///   Looks up a localized string similar to Pozycja 1 [F1].
         /// </summary>
         public static string poz1 {
             get {
@@ -79,7 +79,7 @@ namespace Clicker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pozycja 2  |F2|.
+        ///   Looks up a localized string similar to Pozycja 2 [F2].
         /// </summary>
         public static string poz2 {
             get {
@@ -97,7 +97,7 @@ namespace Clicker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stop.
+        ///   Looks up a localized string similar to Stop [F5].
         /// </summary>
         public static string stop {
             get {
