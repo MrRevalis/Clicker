@@ -1,6 +1,8 @@
-﻿using Clicker.ViewModel.Base;
+﻿using Clicker.Methods;
+using Clicker.ViewModel.Base;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -39,6 +41,7 @@ namespace Clicker.ViewModel
         public string stringPosition2 { get; set; }
         public bool IsActive { get; set; } = true;
         public INPUT[] inputMouse { get; set; }
+        public ObservableCollection<Position> MousePosition { get; set; }
         public Key KeyPressed { get; set; }
         public ICommand Start { get; set; }
         public ICommand Stop { get; set; }
@@ -65,23 +68,21 @@ namespace Clicker.ViewModel
                 inputMouse[i].mouseInput.mouseData = 0;
                 inputMouse[i].mouseInput.time = 0;
             }
+
+            MousePosition = new ObservableCollection<Position>();
         }
 
         public void KeyClickedMethod()
         {
             if (KeyPressed == Key.F1)
             {
-                Position1 = System.Windows.Forms.Control.MousePosition;
+                /*Position1 = System.Windows.Forms.Control.MousePosition;
 
                 stringPosition1 = $"x => {Position1.X}, y=> {Position1.Y}";
-                OnPropertyChanged(nameof(stringPosition1));
-            }
-            else if (KeyPressed == Key.F2)
-            {
-                Position2 = System.Windows.Forms.Control.MousePosition;
-
-                stringPosition2 = $"x => {Position2.X}, y=> {Position2.Y}";
-                OnPropertyChanged(nameof(stringPosition2));
+                OnPropertyChanged(nameof(stringPosition1));*/
+                System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
+                MousePosition.Add(new Position(point.X, point.Y));
+                OnPropertyChanged(nameof(MousePosition));
             }
             else if (KeyPressed == Key.F5)
             {

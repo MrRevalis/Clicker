@@ -8,7 +8,8 @@
         xmlns:prop="clr-namespace:Clicker.AttachedProperties"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="Clicker" Height="200" Width="400"
+        Title="Clicker" Height="300" Width="300"
+        ResizeMode="NoResize"
         prop:WhichKeyClicked.WhichKey="{Binding KeyPressed, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
         >
     <i:Interaction.Triggers>
@@ -23,8 +24,8 @@
         <StackPanel>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -36,23 +37,32 @@
                 
                 <Label 
                     Content="{Binding Source={x:Static resx:Resources.poz1}}"
+                    Grid.RowSpan="2"
                     ></Label>
-                <TextBox
-                    Grid.Column="1"
-                    Style="{StaticResource mouseSpot}"
-                    Text="{Binding stringPosition1}"
-                    ></TextBox>
 
-                <Label 
-                    Content="{Binding Source={x:Static resx:Resources.poz2}}"
-                    Grid.Row="1"
-                    ></Label>
-                <TextBox
+                <ListView
                     Grid.Column="1"
-                    Grid.Row="1"
-                    Style="{StaticResource mouseSpot}"
-                    Text="{Binding stringPosition2}"
-                    ></TextBox>
+                    Grid.RowSpan="2"
+                    Height="150"
+                    Width="140"
+                    HorizontalAlignment="Center"
+                    ItemsSource="{Binding MousePosition}"
+                    >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn 
+                                HeaderContainerStyle="{StaticResource headerColor}"
+                                Header="X"
+                                DisplayMemberBinding="{Binding X}"
+                                ></GridViewColumn>
+                            <GridViewColumn 
+                                HeaderContainerStyle="{StaticResource headerColor}"
+                                Header="Y"
+                                DisplayMemberBinding="{Binding Y}"
+                                ></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
                 <Label
                     Content="{Binding Source={x:Static resx:Resources.czas}}"
