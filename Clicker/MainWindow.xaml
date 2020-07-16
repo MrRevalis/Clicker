@@ -46,7 +46,9 @@
                     Height="150"
                     Width="140"
                     HorizontalAlignment="Center"
+                    Foreground="Black"
                     ItemsSource="{Binding MousePosition}"
+                    prop:ListViewValue.ListView="{Binding MousePosition, UpdateSourceTrigger=PropertyChanged}"
                     >
                     <ListView.View>
                         <GridView>
