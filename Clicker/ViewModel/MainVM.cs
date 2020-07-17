@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Management;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -153,36 +154,25 @@ namespace Clicker.ViewModel
         private ObservableCollection<Program> GetListOfProcesses()
         {
             ObservableCollection<Program> listOfProcesses = new ObservableCollection<Program>();
-
-            //Process process = null;
-            IntPtr handle = IntPtr.Zero;
-            try
+            var query = "SELECT ProcessId, Name, ExecutablePath FROM Win32_Process";
+            using (var searcher = new ManagementObjectSearcher(query))
+            using (var results = searcher.Get())
             {
-                PROCESSENTRY32 processEntry = new PROCESSENTRY32();
-                processEntry.dwSize = (UInt32)Marshal.SizeOf(typeof(PROCESSENTRY32));
-                handle = CreateToolhelp32Snapshot((uint)SnapshotFlags.Process, 0);
-                if (Process32First(handle, ref processEntry))
+                var processes = results.Cast<ManagementObject>().Select(x => new
                 {
-                    do
+                    ProcessId = (UInt32)x["ProcessId"],
+                    Name = (string)x["Name"],
+                    ExecutablePath = (string)x["ExecutablePath"]
+                });
+                foreach (var p in processes)
+                {
+                    if (System.IO.File.Exists(p.ExecutablePath))
                     {
-                        //listOfProcesses.Add(new Program(null, processEntry.szExeFile));
-                        IntPtr hProcess = OpenProcess(ProcessAccessFlags.All, false, Convert.ToInt32(processEntry.th32ProcessID));
-                        if(hProcess != null)
-                        {
-                            string path = string.Empty;
-                            
-                        }
-                        CloseHandle(hProcess);
-                    } while (Process32Next(handle, ref processEntry));
+                        Icon icon = Icon.ExtractAssociatedIcon(p.ExecutablePath);
+                        if (listOfProcesses.FirstOrDefault(x => x.AppName == p.Name) == null)
+                            listOfProcesses.Add(new Program(icon, p.Name, p.ProcessId, p.ExecutablePath));
+                    }
                 }
-            }
-            catch(Exception e)
-            {
-                throw new ApplicationException($"Error process => {e}");
-            }
-            finally
-            {
-                CloseHandle(handle);
             }
             return listOfProcesses;
         }

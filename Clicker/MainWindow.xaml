@@ -85,7 +85,16 @@
                     ItemsSource="{Binding ProcessList}"
                     Grid.Row="4"
                     Grid.Column="1"
-                    ></ComboBox>
+                    >
+                    <ComboBox.ItemTemplate>
+                        <ItemContainerTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding AppIcon}"></Image>
+                                <TextBlock Text="{Binding AppName}"></TextBlock>
+                            </StackPanel>
+                        </ItemContainerTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
                 <Label
                     Content="{Binding Source={x:Static resx:Resources.czas}}"
