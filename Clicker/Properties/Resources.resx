@@ -132,4 +132,7 @@
   <data name="stop" xml:space="preserve">
     <value>Stop [F5]</value>
   </data>
+  <data name="tooltip" xml:space="preserve">
+    <value>Double-Click, aby usunąć pozycje</value>
+  </data>
 </root>

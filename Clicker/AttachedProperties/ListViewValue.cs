@@ -35,13 +35,11 @@ namespace Clicker.AttachedProperties
         {
             ListView listView = sender as ListView;
 
-            
-
-            listView.SelectionChanged += ListView_SelectionChanged;
+           
             listView.MouseDoubleClick += ListView_MouseDoubleClick;
 
             var source = (INotifyCollectionChanged)listView.Items.SourceCollection;
-            /*if ((bool)e.NewValue)
+            if (e.NewValue != null)
             {
                 NotifyCollectionChangedEventHandler scrollToEndHandler = delegate
                 {
@@ -52,39 +50,17 @@ namespace Clicker.AttachedProperties
                 };
 
                 source.CollectionChanged += scrollToEndHandler;
-            }*/
-        }
-
-        private static void Source_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            ListView listView = sender as ListView;
-
-            if (listView.Items.Count <= 0)
-                return;
-
-            listView.Items.MoveCurrentToLast();
-            listView.ScrollIntoView(listView.Items.CurrentItem);
-        }
-
-        private static void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListView listView = sender as ListView;
-            int index = listView.SelectedIndex;
-            //MessageBox.Show(listView.SelectedItem.ToString());
-
-            //listView.Items.RemoveAt(listView.SelectedIndex);
-            var newList = new ObservableCollection<Position>();
-            for (int i = 0; i < listView.Items.Count; i++)
-            {
-                if (i != index)
-                    newList.Add((Position)listView.Items[i]);
             }
-            SetListView(listView, newList);
         }
 
         private static void ListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MessageBox.Show("SIEMA");
+            ListView listView = sender as ListView;
+
+            ObservableCollection<Position> mousePosition = GetListView(listView);
+            int index = listView.SelectedIndex;
+            if (index >= 0)
+                mousePosition.RemoveAt(index);
         }
     }
 }

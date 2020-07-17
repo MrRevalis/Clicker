@@ -76,13 +76,8 @@ namespace Clicker.ViewModel
         {
             if (KeyPressed == Key.F1)
             {
-                /*Position1 = System.Windows.Forms.Control.MousePosition;
-
-                stringPosition1 = $"x => {Position1.X}, y=> {Position1.Y}";
-                OnPropertyChanged(nameof(stringPosition1));*/
                 System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
                 MousePosition.Add(new Position(point.X, point.Y));
-                OnPropertyChanged(nameof(MousePosition));
             }
             else if (KeyPressed == Key.F5)
             {
@@ -106,7 +101,7 @@ namespace Clicker.ViewModel
                 SetCursorPos(Position1.X, Position1.Y);
                 while (IsActive)
                 {
-                    SmoothMouseMove(Position1, Position2, 50, timeOfWait);
+                    /*SmoothMouseMove(Position1, Position2, 50, timeOfWait);
                     Thread.Sleep(100);
                     inputMouse[0].mouseInput.dwFlags = MOUSEEVENTF_RIGHTDOWN;
                     SendInput(1, ref inputMouse[0], Marshal.SizeOf(inputMouse[0]));
@@ -118,7 +113,7 @@ namespace Clicker.ViewModel
                     inputMouse[1].mouseInput.dwFlags = MOUSEEVENTF_RIGHTDOWN;
                     SendInput(1, ref inputMouse[1], Marshal.SizeOf(inputMouse[1]));
                     inputMouse[1].mouseInput.dwFlags = MOUSEEVENTF_RIGHTUP;
-                    SendInput(1, ref inputMouse[1], Marshal.SizeOf(inputMouse[1]));
+                    SendInput(1, ref inputMouse[1], Marshal.SizeOf(inputMouse[1]));*/
                 }
             }
         }

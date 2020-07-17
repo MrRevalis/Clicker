@@ -33,6 +33,8 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 
                 <Label 
@@ -66,19 +68,37 @@
                     </ListView.View>
                 </ListView>
 
+                <RadioButton 
+                    Grid.Row="3"
+                    GroupName="MouseButton"
+                    ></RadioButton>
+                <RadioButton 
+                    GroupName="MouseButton"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    ></RadioButton>
+                
+                <Label
+                    Grid.Row="4"
+                    ></Label>
+                <ComboBox
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    ></ComboBox>
+
                 <Label
                     Content="{Binding Source={x:Static resx:Resources.czas}}"
-                    Grid.Row="3"
+                    Grid.Row="5"
                 ></Label>
                 <TextBox
                     Grid.Column="1"
-                    Grid.Row="3"
+                    Grid.Row="5"
                     Style="{StaticResource timeText}"
                     prop:TimeProperty.TimeBox="{Binding Path=Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     ></TextBox>
                 <Label 
                     Content="[ms]"
-                    Grid.Row="3"
+                    Grid.Row="5"
                     Grid.Column="1"
                     HorizontalContentAlignment="Right"
                     HorizontalAlignment="Right"
@@ -88,12 +108,12 @@
 
                 <Button 
                     Content="{Binding Source={x:Static resx:Resources.start}}"
-                    Grid.Row="4"
+                    Grid.Row="6"
                     Command="{Binding Path=Start}"
                     ></Button>
                 <Button
                     Content="{Binding Source={x:Static resx:Resources.stop}}"
-                    Grid.Row="4"
+                    Grid.Row="6"
                     Grid.Column="1"
                     Command="{Binding Path=Stop}"
                     ></Button>
