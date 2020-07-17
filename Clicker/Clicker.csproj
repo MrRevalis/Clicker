@@ -72,8 +72,9 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\ListViewValue.cs" />
     <Compile Include="AttachedProperties\WhichKeyClicked.cs" />
-    <Compile Include="Methods\Mouse.cs" />
-    <Compile Include="Methods\Position.cs" />
+    <Compile Include="Classes\Mouse.cs" />
+    <Compile Include="Classes\Position.cs" />
+    <Compile Include="Classes\Program.cs" />
     <Compile Include="ViewModel\Base\RelayParameterizedCommand.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="ViewModel\Base\ViewModelBase.cs" />

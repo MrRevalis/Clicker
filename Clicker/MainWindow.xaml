@@ -82,6 +82,7 @@
                     Grid.Row="4"
                     ></Label>
                 <ComboBox
+                    ItemsSource="{Binding ProcessList}"
                     Grid.Row="4"
                     Grid.Column="1"
                     ></ComboBox>
