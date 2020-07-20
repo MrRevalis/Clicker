@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\App.xaml
-21150624373
+6-1426038317
 
-15647783966
+16-194575401
 191858547508
-MainWindow.xaml;Style\Style.xaml;
+MainWindow.xaml;Style\Button.xaml;Style\Colors.xaml;Style\Fonts.xaml;Style\Style.xaml;Style\Texts.xaml;
 
-False
+True
 

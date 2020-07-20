@@ -149,6 +149,8 @@ namespace Clicker.ViewModel
 
             MousePosition = new ObservableCollection<Position>();
             ProcessList = GetListOfProcesses();
+            Thread thread = new Thread(new ThreadStart(RefreshListOfProcesses));
+            thread.Start();
         }
 
         private ObservableCollection<Program> GetListOfProcesses()
@@ -169,12 +171,27 @@ namespace Clicker.ViewModel
                     if (System.IO.File.Exists(p.ExecutablePath))
                     {
                         Icon icon = Icon.ExtractAssociatedIcon(p.ExecutablePath);
-                        if (listOfProcesses.FirstOrDefault(x => x.AppName == p.Name) == null)
+                        /*if (listOfProcesses.FirstOrDefault(x => x.AppName == p.Name) == null)
+                            listOfProcesses.Add(new Program(icon, p.Name, p.ProcessId, p.ExecutablePath));*/
+                        if (Process.GetProcessById((int)p.ProcessId).MainWindowHandle != IntPtr.Zero)
+                        {
                             listOfProcesses.Add(new Program(icon, p.Name, p.ProcessId, p.ExecutablePath));
+                        }
                     }
                 }
             }
             return listOfProcesses;
+        }
+
+        private void RefreshListOfProcesses()
+        {
+            while (true)
+            {
+                if (Process.GetProcesses().Where(x => x.MainWindowHandle != IntPtr.Zero).ToArray().Length != ProcessList.Count)
+                {
+                    MessageBox.Show("Zmiana ilosci procesow");
+                }
+            }
         }
 
         public void KeyClickedMethod()
