@@ -29,85 +29,6 @@ namespace Clicker.ViewModel
         private const int MOUSEEVENTF_LEFTUP = 0x0004;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
         private const int MOUSEEVENTF_RIGHTUP = 0x0010;
-
-        [Flags]
-        private enum SnapshotFlags : uint
-        {
-            HeapList = 0x00000001,
-            Process = 0x00000002,
-            Thread = 0x00000004,
-            Module = 0x00000008,
-            Module32 = 0x00000010,
-            Inherit = 0x80000000,
-            All = 0x0000001F,
-            NoHeaps = 0x40000000
-        }
-
-        [DllImport("user32.dll")]
-        private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
-        [DllImport("User32.dll", SetLastError = true)]
-        public static extern int SendInput(int nInputs, ref INPUT pInputs,int cbSize);
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern IntPtr CreateToolhelp32Snapshot(SnapshotFlags dwFlags, uint th32ProcessID);
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private struct PROCESSENTRY32
-        {
-            const int MAX_PATH = 260;
-            internal UInt32 dwSize;
-            internal UInt32 cntUsage;
-            internal UInt32 th32ProcessID;
-            internal IntPtr th32DefaultHeapID;
-            internal UInt32 th32ModuleID;
-            internal UInt32 cntThreads;
-            internal UInt32 th32ParentProcessID;
-            internal Int32 pcPriClassBase;
-            internal UInt32 dwFlags;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_PATH)]
-            internal string szExeFile;
-        }
-
-        [DllImport("kernel32", SetLastError = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
-        static extern IntPtr CreateToolhelp32Snapshot([In] UInt32 dwFlags, [In] UInt32 th32ProcessID);
-
-        [DllImport("kernel32", SetLastError = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
-        static extern bool Process32First([In] IntPtr hSnapshot, ref PROCESSENTRY32 lppe);
-
-        [DllImport("kernel32", SetLastError = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
-        static extern bool Process32Next([In] IntPtr hSnapshot, ref PROCESSENTRY32 lppe);
-
-        [DllImport("kernel32", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool CloseHandle([In] IntPtr hObject);
-        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-        static extern uint ExtractIconEx(string szFileName, int nIconIndex, IntPtr[] phiconLarge, IntPtr[] phiconSmall, uint nIcons);
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr OpenProcess(
-     ProcessAccessFlags processAccess,
-     bool bInheritHandle,
-     int processId
-);
-        public static IntPtr OpenProcess(Process proc, ProcessAccessFlags flags)
-        {
-            return OpenProcess(flags, false, proc.Id);
-        }
-        [Flags]
-        public enum ProcessAccessFlags : uint
-        {
-            All = 0x001F0FFF,
-            Terminate = 0x00000001,
-            CreateThread = 0x00000002,
-            VirtualMemoryOperation = 0x00000008,
-            VirtualMemoryRead = 0x00000010,
-            VirtualMemoryWrite = 0x00000020,
-            DuplicateHandle = 0x00000040,
-            CreateProcess = 0x000000080,
-            SetQuota = 0x00000100,
-            SetInformation = 0x00000200,
-            QueryInformation = 0x00000400,
-            QueryLimitedInformation = 0x00001000,
-            Synchronize = 0x00100000
-        }
-
         #endregion
 
         #region Public Properties
@@ -117,6 +38,7 @@ namespace Clicker.ViewModel
         public string stringPosition1 { get; set; }
         public string stringPosition2 { get; set; }
         public bool IsActive { get; set; } = true;
+        public CancellationToken Token { get; set; }
         public INPUT[] inputMouse { get; set; }
         public ObservableCollection<Position> MousePosition { get; set; }
         public ObservableCollection<Program> ProcessList { get; set; }
@@ -149,8 +71,10 @@ namespace Clicker.ViewModel
 
             MousePosition = new ObservableCollection<Position>();
             ProcessList = GetListOfProcesses();
-            Thread thread = new Thread(new ThreadStart(RefreshListOfProcesses));
-            thread.Start();
+
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            Token = tokenSource.Token;
+            Task refreshProcesses = Task.Run(() => RefreshListOfProcesses(Token), Token);
         }
 
         private ObservableCollection<Program> GetListOfProcesses()
@@ -171,26 +95,30 @@ namespace Clicker.ViewModel
                     if (System.IO.File.Exists(p.ExecutablePath))
                     {
                         Icon icon = Icon.ExtractAssociatedIcon(p.ExecutablePath);
-                        /*if (listOfProcesses.FirstOrDefault(x => x.AppName == p.Name) == null)
-                            listOfProcesses.Add(new Program(icon, p.Name, p.ProcessId, p.ExecutablePath));*/
-                        if (Process.GetProcessById((int)p.ProcessId).MainWindowHandle != IntPtr.Zero)
+                        try
                         {
-                            listOfProcesses.Add(new Program(icon, p.Name, p.ProcessId, p.ExecutablePath));
+                            if (Process.GetProcessById((int)p.ProcessId).MainWindowHandle != IntPtr.Zero)
+                            {
+                                listOfProcesses.Add(new Program(icon, p.Name, p.ProcessId, p.ExecutablePath));
+                            }
                         }
+                        catch(Exception e) { }
                     }
                 }
             }
+            MessageBox.Show(listOfProcesses.Count().ToString());
             return listOfProcesses;
         }
 
-        private void RefreshListOfProcesses()
+        private Task RefreshListOfProcesses(CancellationToken cancellationToken)
         {
             while (true)
             {
-                if (Process.GetProcesses().Where(x => x.MainWindowHandle != IntPtr.Zero).ToArray().Length != ProcessList.Count)
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    MessageBox.Show("Zmiana ilosci procesow");
+                    cancellationToken.ThrowIfCancellationRequested();
                 }
+
             }
         }
 
@@ -216,14 +144,14 @@ namespace Clicker.ViewModel
 
         private void StartClicking()
         {
-            if (Position1 != System.Drawing.Point.Empty && Position2 != System.Drawing.Point.Empty && Time != null)
+            /*if (Position1 != System.Drawing.Point.Empty && Position2 != System.Drawing.Point.Empty && Time != null)
             {
                 IsActive = true;
                 int timeOfWait = int.Parse(Time);
                 SetCursorPos(Position1.X, Position1.Y);
                 while (IsActive)
                 {
-                    /*SmoothMouseMove(Position1, Position2, 50, timeOfWait);
+                    SmoothMouseMove(Position1, Position2, 50, timeOfWait);
                     Thread.Sleep(100);
                     inputMouse[0].mouseInput.dwFlags = MOUSEEVENTF_RIGHTDOWN;
                     SendInput(1, ref inputMouse[0], Marshal.SizeOf(inputMouse[0]));
@@ -235,9 +163,9 @@ namespace Clicker.ViewModel
                     inputMouse[1].mouseInput.dwFlags = MOUSEEVENTF_RIGHTDOWN;
                     SendInput(1, ref inputMouse[1], Marshal.SizeOf(inputMouse[1]));
                     inputMouse[1].mouseInput.dwFlags = MOUSEEVENTF_RIGHTUP;
-                    SendInput(1, ref inputMouse[1], Marshal.SizeOf(inputMouse[1]));*/
+                    SendInput(1, ref inputMouse[1], Marshal.SizeOf(inputMouse[1]));
                 }
-            }
+            }*/
         }
         private void StopMethod()
         {
