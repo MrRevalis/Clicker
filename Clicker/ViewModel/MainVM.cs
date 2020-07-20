@@ -29,16 +29,33 @@ namespace Clicker.ViewModel
         private const int MOUSEEVENTF_LEFTUP = 0x0004;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
         private const int MOUSEEVENTF_RIGHTUP = 0x0010;
+        /*
+         
+[StructLayout(LayoutKind.Sequential)]
+public struct POINT
+{
+    public int X;
+    public int Y;
+
+    public POINT(int x, int y)
+    {
+        this.X = x;
+        this.Y = y;
+    }
+}
+         */
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetCursorPos(out Position lpPoint);
         #endregion
 
         #region Public Properties
         public string Time { get; set; }
-        public System.Drawing.Point Position1 { get; set; }
-        public System.Drawing.Point Position2 { get; set; }
         public string stringPosition1 { get; set; }
         public string stringPosition2 { get; set; }
         public bool IsActive { get; set; } = true;
         public CancellationToken Token { get; set; }
+        public CancellationTokenSource TokenSource { get; set; }
         public INPUT[] inputMouse { get; set; }
         public ObservableCollection<Position> MousePosition { get; set; }
         public ObservableCollection<Program> ProcessList { get; set; }
@@ -46,10 +63,6 @@ namespace Clicker.ViewModel
         public ICommand Start { get; set; }
         public ICommand Stop { get; set; }
         public ICommand OnKeyClicked { get; set; }
-        #endregion
-
-        #region Private
-        private Thread t;
         #endregion
         public MainVM()
         {
@@ -72,8 +85,8 @@ namespace Clicker.ViewModel
             MousePosition = new ObservableCollection<Position>();
             ProcessList = GetListOfProcesses();
 
-            CancellationTokenSource tokenSource = new CancellationTokenSource();
-            Token = tokenSource.Token;
+            TokenSource = new CancellationTokenSource();
+            Token = TokenSource.Token;
             Task refreshProcesses = Task.Run(() => RefreshListOfProcesses(Token), Token);
         }
 
@@ -118,7 +131,7 @@ namespace Clicker.ViewModel
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                 }
-
+                Thread.Sleep(3000);
             }
         }
 
@@ -126,8 +139,9 @@ namespace Clicker.ViewModel
         {
             if (KeyPressed == Key.F1)
             {
-                System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
-                MousePosition.Add(new Position(point.X, point.Y));
+                Position position;
+                if (GetCursorPos(out position))
+                    MousePosition.Add(position);
             }
             else if (KeyPressed == Key.F5)
             {
@@ -137,11 +151,21 @@ namespace Clicker.ViewModel
 
         public void StartMethod()
         {
-            t = new Thread(new ThreadStart(StartClicking));
-            t.IsBackground = true;
-            t.Start();
+            TokenSource.Cancel();
         }
-
+        private void StartClicking(CancellationToken cancellationToken)
+        {
+            int timeOfWait = int.Parse(Time);
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                Position startPosition = MousePosition[0];
+                SetCursorPos(startPosition.X, startPosition.Y);
+                foreach (Position x in MousePosition)
+                {
+                    SmoothMouseMove(startPosition, x, 50, timeOfWait);
+                }
+            }
+        }
         private void StartClicking()
         {
             /*if (Position1 != System.Drawing.Point.Empty && Position2 != System.Drawing.Point.Empty && Time != null)
@@ -166,21 +190,22 @@ namespace Clicker.ViewModel
                     SendInput(1, ref inputMouse[1], Marshal.SizeOf(inputMouse[1]));
                 }
             }*/
+            MessageBox.Show("siema");
         }
         private void StopMethod()
         {
             IsActive = false;
             OnPropertyChanged(nameof(IsActive));
         }
-        private void SmoothMouseMove(System.Drawing.Point oldPosition, System.Drawing.Point newPosition, int steps, int time)
+        private void SmoothMouseMove(Position oldPosition, Position newPosition, int steps, int time)
         {
-            System.Drawing.Point pointDifference = new System.Drawing.Point(newPosition.X - oldPosition.X, newPosition.Y - oldPosition.Y);
+            Position pointDifference = new Position(newPosition.X - oldPosition.X, newPosition.Y - oldPosition.Y);
             pointDifference.X /= steps;
             pointDifference.Y /= steps;
             Random random = new Random();
             for (int i = 0; i < steps; i++)
             {
-                oldPosition = new System.Drawing.Point(oldPosition.X + pointDifference.X, oldPosition.Y + pointDifference.Y);
+                oldPosition = new Position(oldPosition.X + pointDifference.X, oldPosition.Y + pointDifference.Y);
                 SetCursorPos(oldPosition.X, oldPosition.Y);
                 Thread.Sleep(10);
             }
