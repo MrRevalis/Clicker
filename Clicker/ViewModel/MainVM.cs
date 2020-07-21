@@ -29,26 +29,24 @@ namespace Clicker.ViewModel
         private const int MOUSEEVENTF_LEFTUP = 0x0004;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
         private const int MOUSEEVENTF_RIGHTUP = 0x0010;
-        /*
-         
-[StructLayout(LayoutKind.Sequential)]
-public struct POINT
-{
-    public int X;
-    public int Y;
 
-    public POINT(int x, int y)
-    {
-        this.X = x;
-        this.Y = y;
-    }
-}
-         */
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetCursorPos(out Position lpPoint);
-        #endregion
+        static extern bool GetCursorPos(out POINT lpPoint);
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public int X;
+            public int Y;
 
+            public POINT(int x, int y)
+            {
+                this.X = x;
+                this.Y = y;
+            }
+        }
+        #endregion
+        
         #region Public Properties
         public string Time { get; set; }
         public string stringPosition1 { get; set; }
@@ -56,7 +54,7 @@ public struct POINT
         public bool IsActive { get; set; } = true;
         public CancellationToken Token { get; set; }
         public CancellationTokenSource TokenSource { get; set; }
-        public INPUT[] inputMouse { get; set; }
+        public INPUT MouseInput { get; set; }
         public ObservableCollection<Position> MousePosition { get; set; }
         public ObservableCollection<Program> ProcessList { get; set; }
         public Key KeyPressed { get; set; }
@@ -70,7 +68,7 @@ public struct POINT
             Start = new RelayCommand(() => StartMethod());
             Stop = new RelayCommand(() => StopMethod());
 
-            inputMouse = new INPUT[2];
+            INPUT[] inputMouse = new INPUT[2];
             for (int i = 0; i < 2; i++)
             {
                 inputMouse[i].type = 0;
@@ -81,6 +79,8 @@ public struct POINT
                 inputMouse[i].mouseInput.mouseData = 0;
                 inputMouse[i].mouseInput.time = 0;
             }
+
+            
 
             MousePosition = new ObservableCollection<Position>();
             ProcessList = GetListOfProcesses();
@@ -139,9 +139,9 @@ public struct POINT
         {
             if (KeyPressed == Key.F1)
             {
-                Position position;
+                POINT position;
                 if (GetCursorPos(out position))
-                    MousePosition.Add(position);
+                    MousePosition.Add(new Position(position.X, position.Y));
             }
             else if (KeyPressed == Key.F5)
             {
@@ -163,6 +163,7 @@ public struct POINT
                 foreach (Position x in MousePosition)
                 {
                     SmoothMouseMove(startPosition, x, 50, timeOfWait);
+
                 }
             }
         }
