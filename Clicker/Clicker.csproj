@@ -72,8 +72,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\ListViewValue.cs" />
+    <Compile Include="AttachedProperties\RadioButtonClicked.cs" />
     <Compile Include="AttachedProperties\WhichKeyClicked.cs" />
-    <Compile Include="Classes\Input.cs" />
+    <Compile Include="Classes\GlobalHotKey.cs" />
+    <Compile Include="Classes\MouseInput.cs" />
     <Compile Include="Classes\Position.cs" />
     <Compile Include="Classes\Program.cs" />
     <Compile Include="ViewModel\Base\RelayParameterizedCommand.cs" />

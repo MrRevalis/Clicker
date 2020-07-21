@@ -120,11 +120,17 @@
   <data name="czas" xml:space="preserve">
     <value>Czas [ms]</value>
   </data>
+  <data name="left" xml:space="preserve">
+    <value>Lewy przycisk</value>
+  </data>
   <data name="poz1" xml:space="preserve">
     <value>Pozycja [F1]</value>
   </data>
   <data name="poz2" xml:space="preserve">
     <value>Pozycja 2 [F2]</value>
+  </data>
+  <data name="right" xml:space="preserve">
+    <value>Prawy przycisk</value>
   </data>
   <data name="start" xml:space="preserve">
     <value>Start</value>

@@ -1,34 +1,26 @@
-﻿using Clicker.Methods;
-using Clicker.ViewModel.Base;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using static Clicker.Methods.Mouse;
 
 namespace Clicker.ViewModel
 {
+    using Clicker.Classes;
+    using Clicker.Methods;
+    using Clicker.ViewModel.Base;
+    using static Clicker.Methods.MouseInput;
     public class MainVM : ViewModelBase
     {
         #region Import
         [DllImport("user32")]
         public static extern int SetCursorPos(int x, int y);
-
-        private const int MOUSEEVENTF_MOVE = 0x0001;
-        private const int MOUSEEVENTF_LEFTDOWN = 0x0002;
-        private const int MOUSEEVENTF_LEFTUP = 0x0004;
-        private const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
-        private const int MOUSEEVENTF_RIGHTUP = 0x0010;
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -45,8 +37,11 @@ namespace Clicker.ViewModel
                 this.Y = y;
             }
         }
+        [DllImport("user32.dll")]
+        private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+        [DllImport("User32.dll", SetLastError = true)]
+        public static extern int SendInput(int nInputs, ref INPUT pInputs, int cbSize);
         #endregion
-        
         #region Public Properties
         public string Time { get; set; }
         public string stringPosition1 { get; set; }
@@ -54,7 +49,8 @@ namespace Clicker.ViewModel
         public bool IsActive { get; set; } = true;
         public CancellationToken Token { get; set; }
         public CancellationTokenSource TokenSource { get; set; }
-        public INPUT MouseInput { get; set; }
+        public INPUT[] MouseInput { get; set; }
+        public Program SelectedProgram { get; set; }
         public ObservableCollection<Position> MousePosition { get; set; }
         public ObservableCollection<Program> ProcessList { get; set; }
         public Key KeyPressed { get; set; }
@@ -62,34 +58,35 @@ namespace Clicker.ViewModel
         public ICommand Stop { get; set; }
         public ICommand OnKeyClicked { get; set; }
         #endregion
+        #region Private Methods
+        private GlobalKeyboardHook _globalKeyboardHook;
+        #endregion
+        #region Constructor
         public MainVM()
         {
             OnKeyClicked = new RelayCommand(() => KeyClickedMethod());
             Start = new RelayCommand(() => StartMethod());
             Stop = new RelayCommand(() => StopMethod());
 
-            INPUT[] inputMouse = new INPUT[2];
-            for (int i = 0; i < 2; i++)
-            {
-                inputMouse[i].type = 0;
-                inputMouse[i].mouseInput.dx = 0;
-                inputMouse[i].mouseInput.dy = 0;
-                inputMouse[i].mouseInput.dwFlags = MOUSEEVENTF_RIGHTDOWN;
-                inputMouse[i].mouseInput.dwExtraInfo = IntPtr.Zero;
-                inputMouse[i].mouseInput.mouseData = 0;
-                inputMouse[i].mouseInput.time = 0;
-            }
-
-            
+            MouseInput = new INPUT[1];
+            MouseInput[0].type = 0;
+            MouseInput[0].mouseInput.dx = 0;
+            MouseInput[0].mouseInput.dy = 0;
+            MouseInput[0].mouseInput.dwFlags = MouseEvent.MOUSEEVENTF_RIGHTDOWN;
+            MouseInput[0].mouseInput.dwExtraInfo = IntPtr.Zero;
+            MouseInput[0].mouseInput.mouseData = 0;
+            MouseInput[0].mouseInput.time = 0;
 
             MousePosition = new ObservableCollection<Position>();
             ProcessList = GetListOfProcesses();
 
-            TokenSource = new CancellationTokenSource();
-            Token = TokenSource.Token;
-            Task refreshProcesses = Task.Run(() => RefreshListOfProcesses(Token), Token);
-        }
+            _globalKeyboardHook = new GlobalKeyboardHook(new Keys[] { Keys.F5 });
+            _globalKeyboardHook.KeyboardPressed += OnKeyPressed;
 
+            Task.Run(RefreshListOfProcesses);
+        }
+        #endregion
+        #region Methods
         private ObservableCollection<Program> GetListOfProcesses()
         {
             ObservableCollection<Program> listOfProcesses = new ObservableCollection<Program>();
@@ -119,19 +116,19 @@ namespace Clicker.ViewModel
                     }
                 }
             }
-            MessageBox.Show(listOfProcesses.Count().ToString());
             return listOfProcesses;
         }
 
-        private Task RefreshListOfProcesses(CancellationToken cancellationToken)
+        private void RefreshListOfProcesses()
         {
             while (true)
             {
-                if (cancellationToken.IsCancellationRequested)
+                ObservableCollection<Program> refreshList = GetListOfProcesses();
+                if(refreshList.Count != ProcessList.Count)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
+                    ProcessList = refreshList;
                 }
-                Thread.Sleep(3000);
+                Thread.Sleep(5000);
             }
         }
 
@@ -143,60 +140,46 @@ namespace Clicker.ViewModel
                 if (GetCursorPos(out position))
                     MousePosition.Add(new Position(position.X, position.Y));
             }
-            else if (KeyPressed == Key.F5)
-            {
-                StopMethod();
-            }
         }
 
         public void StartMethod()
         {
-            TokenSource.Cancel();
+            if(SelectedProgram != null && Time != string.Empty && MousePosition.Count >= 1)
+            {
+                TokenSource = new CancellationTokenSource();
+                Token = TokenSource.Token;
+                Task.Run(() => StartClicking(Token), Token);
+            }
         }
         private void StartClicking(CancellationToken cancellationToken)
         {
             int timeOfWait = int.Parse(Time);
+            Position firstPosition = MousePosition[0];
+            SetCursorPos(firstPosition.X, firstPosition.Y);
+            int selectedProgramID = (int)SelectedProgram.ProcessID;
             while (!cancellationToken.IsCancellationRequested)
             {
                 Position startPosition = MousePosition[0];
-                SetCursorPos(startPosition.X, startPosition.Y);
                 foreach (Position x in MousePosition)
                 {
+                    if (Process.GetProcessById(selectedProgramID).MainWindowHandle == IntPtr.Zero)
+                    {
+                        TokenSource.Cancel();
+                    }
                     SmoothMouseMove(startPosition, x, 50, timeOfWait);
-
+                    Thread.Sleep(100);
+                    MouseInput[0].mouseInput.dwFlags = MouseEvent.MOUSEEVENTF_RIGHTDOWN;
+                    SendInput(1, ref MouseInput[0], Marshal.SizeOf(MouseInput[0]));
+                    MouseInput[0].mouseInput.dwFlags = MouseEvent.MOUSEEVENTF_RIGHTUP;
+                    SendInput(1, ref MouseInput[0], Marshal.SizeOf(MouseInput[0]));
+                    startPosition = x;
                 }
+                SmoothMouseMove(startPosition, firstPosition, 50, timeOfWait);
             }
-        }
-        private void StartClicking()
-        {
-            /*if (Position1 != System.Drawing.Point.Empty && Position2 != System.Drawing.Point.Empty && Time != null)
-            {
-                IsActive = true;
-                int timeOfWait = int.Parse(Time);
-                SetCursorPos(Position1.X, Position1.Y);
-                while (IsActive)
-                {
-                    SmoothMouseMove(Position1, Position2, 50, timeOfWait);
-                    Thread.Sleep(100);
-                    inputMouse[0].mouseInput.dwFlags = MOUSEEVENTF_RIGHTDOWN;
-                    SendInput(1, ref inputMouse[0], Marshal.SizeOf(inputMouse[0]));
-                    inputMouse[0].mouseInput.dwFlags = MOUSEEVENTF_RIGHTUP;
-                    SendInput(1, ref inputMouse[0], Marshal.SizeOf(inputMouse[0]));
-
-                    SmoothMouseMove(Position2, Position1, 50, timeOfWait);
-                    Thread.Sleep(100);
-                    inputMouse[1].mouseInput.dwFlags = MOUSEEVENTF_RIGHTDOWN;
-                    SendInput(1, ref inputMouse[1], Marshal.SizeOf(inputMouse[1]));
-                    inputMouse[1].mouseInput.dwFlags = MOUSEEVENTF_RIGHTUP;
-                    SendInput(1, ref inputMouse[1], Marshal.SizeOf(inputMouse[1]));
-                }
-            }*/
-            MessageBox.Show("siema");
         }
         private void StopMethod()
         {
-            IsActive = false;
-            OnPropertyChanged(nameof(IsActive));
+            TokenSource.Cancel();
         }
         private void SmoothMouseMove(Position oldPosition, Position newPosition, int steps, int time)
         {
@@ -210,8 +193,16 @@ namespace Clicker.ViewModel
                 SetCursorPos(oldPosition.X, oldPosition.Y);
                 Thread.Sleep(10);
             }
-            SetCursorPos(oldPosition.X + random.Next(-5, 5), oldPosition.Y + random.Next(-5, 5));
-            Thread.Sleep(time - (steps * 5));
+            SetCursorPos(newPosition.X, newPosition.Y);
+            Thread.Sleep(time - (steps * 10));
         }
+        private void OnKeyPressed(object sender, GlobalKeyboardHookEventArgs e)
+        {
+            if (e.KeyboardState == GlobalKeyboardHook.KeyboardState.KeyDown)
+            {
+                StopMethod();
+            }
+        }
+        #endregion
     }
 }

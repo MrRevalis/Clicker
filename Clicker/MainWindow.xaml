@@ -71,11 +71,13 @@
                 <RadioButton 
                     Grid.Row="3"
                     GroupName="MouseButton"
+                    Content="{Binding Source={x:Static resx:Resources.left}}"
                     ></RadioButton>
                 <RadioButton 
                     GroupName="MouseButton"
                     Grid.Row="3"
                     Grid.Column="1"
+                    Content="{Binding Source={x:Static resx:Resources.right}}"
                     ></RadioButton>
                 
                 <Label
@@ -85,6 +87,7 @@
                     ItemsSource="{Binding ProcessList}"
                     Grid.Row="4"
                     Grid.Column="1"
+                    SelectedItem="{Binding SelectedProgram}"
                     >
                     <ComboBox.ItemTemplate>
                         <ItemContainerTemplate>

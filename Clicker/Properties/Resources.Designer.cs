@@ -70,6 +70,15 @@ namespace Clicker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lewy przycisk.
+        /// </summary>
+        public static string left {
+            get {
+                return ResourceManager.GetString("left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pozycja [F1].
         /// </summary>
         public static string poz1 {
@@ -84,6 +93,15 @@ namespace Clicker.Properties {
         public static string poz2 {
             get {
                 return ResourceManager.GetString("poz2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prawy przycisk.
+        /// </summary>
+        public static string right {
+            get {
+                return ResourceManager.GetString("right", resourceCulture);
             }
         }
         

@@ -16,7 +16,11 @@ namespace Clicker.Methods
             X = x;
             Y = y;
         }
-
+        public Position(Position x)
+        {
+            this.X = x.X;
+            this.Y = x.Y;
+        }
         public override string ToString()
         {
             return $"x=> {X}, y=> {Y}";
