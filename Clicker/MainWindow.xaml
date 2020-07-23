@@ -71,12 +71,16 @@
                 <RadioButton 
                     Grid.Row="3"
                     GroupName="MouseButton"
+                    Tag="left"
+                    prop:RadioButtonClicked.RadioButton="{Binding MouseKey, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     Content="{Binding Source={x:Static resx:Resources.left}}"
                     ></RadioButton>
                 <RadioButton 
                     GroupName="MouseButton"
                     Grid.Row="3"
                     Grid.Column="1"
+                    Tag="right"
+                    prop:RadioButtonClicked.RadioButton="{Binding MouseKey, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     Content="{Binding Source={x:Static resx:Resources.right}}"
                     ></RadioButton>
                 

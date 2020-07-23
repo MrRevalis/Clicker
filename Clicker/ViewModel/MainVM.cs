@@ -44,9 +44,7 @@ namespace Clicker.ViewModel
         #endregion
         #region Public Properties
         public string Time { get; set; }
-        public string stringPosition1 { get; set; }
-        public string stringPosition2 { get; set; }
-        public bool IsActive { get; set; } = true;
+        public string MouseKey { get; set; }
         public CancellationToken Token { get; set; }
         public CancellationTokenSource TokenSource { get; set; }
         public INPUT[] MouseInput { get; set; }
@@ -144,7 +142,7 @@ namespace Clicker.ViewModel
 
         public void StartMethod()
         {
-            if(SelectedProgram != null && Time != string.Empty && MousePosition.Count >= 1)
+            if(SelectedProgram != null && Time != string.Empty && MousePosition.Count >= 1 && MouseKey != string.Empty)
             {
                 TokenSource = new CancellationTokenSource();
                 Token = TokenSource.Token;
@@ -157,6 +155,16 @@ namespace Clicker.ViewModel
             Position firstPosition = MousePosition[0];
             SetCursorPos(firstPosition.X, firstPosition.Y);
             int selectedProgramID = (int)SelectedProgram.ProcessID;
+            int mouseClick;
+            if (MouseKey == "left")
+            {
+                mouseClick = MouseEvent.MOUSEEVENTF_LEFTDOWN;
+            }
+            else
+            {
+                mouseClick = MouseEvent.MOUSEEVENTF_RIGHTDOWN;
+            }
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 Position startPosition = MousePosition[0];
@@ -168,9 +176,9 @@ namespace Clicker.ViewModel
                     }
                     SmoothMouseMove(startPosition, x, 50, timeOfWait);
                     Thread.Sleep(100);
-                    MouseInput[0].mouseInput.dwFlags = MouseEvent.MOUSEEVENTF_RIGHTDOWN;
+                    MouseInput[0].mouseInput.dwFlags = mouseClick;
                     SendInput(1, ref MouseInput[0], Marshal.SizeOf(MouseInput[0]));
-                    MouseInput[0].mouseInput.dwFlags = MouseEvent.MOUSEEVENTF_RIGHTUP;
+                    MouseInput[0].mouseInput.dwFlags = mouseClick + 2;
                     SendInput(1, ref MouseInput[0], Marshal.SizeOf(MouseInput[0]));
                     startPosition = x;
                 }
