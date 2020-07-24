@@ -15,6 +15,7 @@ namespace Clicker.ViewModel
     using Clicker.Classes;
     using Clicker.Methods;
     using Clicker.ViewModel.Base;
+    using System.ComponentModel;
     using static Clicker.Methods.MouseInput;
     public class MainVM : ViewModelBase
     {
@@ -41,6 +42,19 @@ namespace Clicker.ViewModel
         private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
         [DllImport("User32.dll", SetLastError = true)]
         public static extern int SendInput(int nInputs, ref INPUT pInputs, int cbSize);
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, ShowWindowCommands nCmdShow);
+        private enum ShowWindowCommands : int
+        {
+            /// <summary>
+            /// Activates and displays the window. If the window is minimized or 
+            /// maximized, the system restores it to its original size and position. 
+            /// An application should specify this flag when restoring a minimized window.
+            /// </summary>
+            Restore = 9,
+        }
         #endregion
         #region Public Properties
         public string Time { get; set; }
@@ -82,6 +96,7 @@ namespace Clicker.ViewModel
             _globalKeyboardHook.KeyboardPressed += OnKeyPressed;
 
             Task.Run(RefreshListOfProcesses);
+
         }
         #endregion
         #region Methods
@@ -124,7 +139,7 @@ namespace Clicker.ViewModel
                 ObservableCollection<Program> refreshList = GetListOfProcesses();
                 if(refreshList.Count != ProcessList.Count)
                 {
-                    ProcessList = refreshList;
+                    
                 }
                 Thread.Sleep(5000);
             }
@@ -146,9 +161,26 @@ namespace Clicker.ViewModel
             {
                 TokenSource = new CancellationTokenSource();
                 Token = TokenSource.Token;
+
+                IntPtr windowHandle = Process.GetProcessById((int)SelectedProgram.ProcessID).MainWindowHandle;
+                ShowWindow(windowHandle, ShowWindowCommands.Restore);
+                SetForegroundWindow(windowHandle);
+
+                Process appProces = new Process();
+                appProces.Exited += new EventHandler(appClosed);
+                appProces.StartInfo.FileName = SelectedProgram.ExecutablePath;
+                appProces.EnableRaisingEvents = true;
+                appProces.Start();
+
                 Task.Run(() => StartClicking(Token), Token);
             }
         }
+
+        private void appClosed(object sender, EventArgs e)
+        {
+            StopMethod();
+        }
+
         private void StartClicking(CancellationToken cancellationToken)
         {
             int timeOfWait = int.Parse(Time);
@@ -170,10 +202,6 @@ namespace Clicker.ViewModel
                 Position startPosition = MousePosition[0];
                 foreach (Position x in MousePosition)
                 {
-                    if (Process.GetProcessById(selectedProgramID).MainWindowHandle == IntPtr.Zero)
-                    {
-                        TokenSource.Cancel();
-                    }
                     SmoothMouseMove(startPosition, x, 50, timeOfWait);
                     Thread.Sleep(100);
                     MouseInput[0].mouseInput.dwFlags = mouseClick;
@@ -185,10 +213,12 @@ namespace Clicker.ViewModel
                 SmoothMouseMove(startPosition, firstPosition, 50, timeOfWait);
             }
         }
+
         private void StopMethod()
         {
             TokenSource.Cancel();
         }
+
         private void SmoothMouseMove(Position oldPosition, Position newPosition, int steps, int time)
         {
             Position pointDifference = new Position(newPosition.X - oldPosition.X, newPosition.Y - oldPosition.Y);
