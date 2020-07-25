@@ -127,6 +127,7 @@
                     Content="{Binding Source={x:Static resx:Resources.start}}"
                     Grid.Row="6"
                     Command="{Binding Path=Start}"
+                    Style="{StaticResource buttonStyle}"
                     ></Button>
                 <Button
                     Content="{Binding Source={x:Static resx:Resources.stop}}"

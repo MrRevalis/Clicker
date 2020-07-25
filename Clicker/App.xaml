@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:Clicker"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="Style/Style.xaml"></ResourceDictionary>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style/Style.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Style/Colors.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Style/Buttons.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
