@@ -2,23 +2,33 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Clicker.Style">
 
-    <Style TargetType="Button" x:Key="buttonStyle">
-        <Setter Property="Padding" Value="10 5 10 5"></Setter>
-        <Setter Property="Background" Value="{StaticResource ThistleBrush}"></Setter>
+    <Style TargetType="{x:Type Button}" x:Key="buttonStyle">
         <Setter Property="Foreground" Value="{StaticResource BeigeBrush}"></Setter>
-        <Setter Property="BorderThickness" Value="0"></Setter>
-
-        <Setter Property="Template">
+        <Setter Property="Control.Template">
             <Setter.Value>
-                <ControlTemplate>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border 
+                            Name="Border" 
+                            Background="{StaticResource ThistleBrush}"
+                            CornerRadius="5"
+                            >
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Margin="5 0 5 0"
+                                >
+                            </ContentPresenter>
+                        </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Foreground" Value="{StaticResource RaisinBlackBrush}"></Setter>
+                            <!--<Setter TargetName="Border" Property="Background" Value="Red"></Setter>-->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
     </Style>
 </ResourceDictionary>

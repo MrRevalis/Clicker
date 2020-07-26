@@ -8,7 +8,7 @@
         xmlns:prop="clr-namespace:Clicker.AttachedProperties"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="Clicker" Height="300" Width="300"
+        Title="Clicker" Height="400" Width="300"
         ResizeMode="NoResize"
         prop:WhichKeyClicked.WhichKey="{Binding KeyPressed, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
         >
