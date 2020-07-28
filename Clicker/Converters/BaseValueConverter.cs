@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Clicker.Converters
+namespace Clicker
 {
     public abstract class BaseValueConverter<T> : MarkupExtension, IValueConverter where T : class, new()
     {

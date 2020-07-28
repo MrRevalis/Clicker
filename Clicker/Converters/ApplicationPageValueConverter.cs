@@ -1,4 +1,5 @@
-﻿using Clicker.ViewModel;
+﻿using Clicker.Pages;
+using Clicker.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Clicker.Converters
+namespace Clicker
 {
     public class ApplicationPageValueConverter : BaseValueConverter<ApplicationPageValueConverter>
     {
@@ -16,7 +17,7 @@ namespace Clicker.Converters
             switch ((ApplicationPage)value)
             {
                 case ApplicationPage.Clicker:
-                    return new ClickerPageVM();
+                    return new ClickerPage();
 
 
                 default:

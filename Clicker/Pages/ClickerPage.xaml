@@ -1,17 +1,144 @@
 ﻿<local:BasePage 
-      x:TypeArguments="vm:ClickerPageVM"
-      x:Class="Clicker.Pages.ClickerPage"
+        x:TypeArguments="vm:ClickerPageVM"
+        x:Class="Clicker.Pages.ClickerPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Clicker.Pages"
       xmlns:vm="clr-namespace:Clicker.ViewModel"
+      xmlns:prop="clr-namespace:Clicker.AttachedProperties"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:resx="clr-namespace:Clicker.Properties"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="400" d:DesignWidth="300"
       Title="ClickerPage">
-
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="PreviewKeyDown">
+            <i:InvokeCommandAction 
+                Command="{Binding OnKeyClicked}"
+                CommandParameter="{Binding KeyPressed}"
+                ></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
     <Grid>
-        
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label 
+                    Content="{Binding Source={x:Static resx:Resources.poz1}}"
+                    Grid.RowSpan="2"
+                    ></Label>
+
+                <ListView
+                    Grid.Column="1"
+                    Grid.RowSpan="2"
+                    Height="150"
+                    Width="140"
+                    HorizontalAlignment="Center"
+                    Foreground="Black"
+                    ItemsSource="{Binding MousePosition}"
+                    prop:ListViewValue.ListView="{Binding MousePosition, UpdateSourceTrigger=PropertyChanged}"
+                    >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn 
+                                HeaderContainerStyle="{StaticResource headerColor}"
+                                Header="X"
+                                DisplayMemberBinding="{Binding X}"
+                                ></GridViewColumn>
+                            <GridViewColumn 
+                                HeaderContainerStyle="{StaticResource headerColor}"
+                                Header="Y"
+                                DisplayMemberBinding="{Binding Y}"
+                                ></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <RadioButton 
+                    Grid.Row="3"
+                    GroupName="MouseButton"
+                    Tag="left"
+                    prop:RadioButtonClicked.RadioButton="{Binding MouseKey, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding Source={x:Static resx:Resources.left}}"
+                    ></RadioButton>
+                <RadioButton 
+                    GroupName="MouseButton"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Tag="right"
+                    prop:RadioButtonClicked.RadioButton="{Binding MouseKey, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding Source={x:Static resx:Resources.right}}"
+                    ></RadioButton>
+
+                <Label
+                    Grid.Row="4"
+                    ></Label>
+                <ComboBox
+                    ItemsSource="{Binding ProcessList}"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    SelectedItem="{Binding SelectedProgram}"
+                    >
+                    <ComboBox.ItemTemplate>
+                        <ItemContainerTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding AppIcon}"></Image>
+                                <TextBlock Text="{Binding AppName}"></TextBlock>
+                            </StackPanel>
+                        </ItemContainerTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Label
+                    Content="{Binding Source={x:Static resx:Resources.czas}}"
+                    Grid.Row="5"
+                ></Label>
+                <TextBox
+                    Grid.Column="1"
+                    Grid.Row="5"
+                    Style="{StaticResource timeText}"
+                    prop:TimeProperty.TimeBox="{Binding Path=Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ></TextBox>
+                <Label 
+                    Content="[ms]"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    HorizontalContentAlignment="Right"
+                    HorizontalAlignment="Right"
+                    Width="auto"
+                    FontSize="15"
+                    ></Label>
+
+                <Button 
+                    Content="{Binding Source={x:Static resx:Resources.start}}"
+                    Grid.Row="6"
+                    Command="{Binding Path=Start}"
+                    Style="{StaticResource buttonStyle}"
+                    ></Button>
+                <Button
+                    Content="{Binding Source={x:Static resx:Resources.stop}}"
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Command="{Binding Path=Stop}"
+                    ></Button>
+            </Grid>
+        </StackPanel>
     </Grid>
 </local:BasePage>

@@ -47,6 +47,15 @@ namespace Clicker.ViewModel
         public Thickness WindowPadding { get { return new Thickness(mOuterMarginSize); } }
         public double TitleBarHeight { get; set; } = 30;
         public GridLength TitleBarGridHeight { get { return new GridLength(TitleBarHeight + ResizeBorder); } }
+        public ApplicationPage CurrentPage
+        {
+            get => currentPage;
+            set
+            {
+                currentPage = value;
+                OnPropertyChanged(nameof(CurrentPage));
+            }
+        }
         #endregion
 
         #region Constructor
