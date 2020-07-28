@@ -71,3 +71,5 @@ C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Style\Buttons.baml
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Style\Colors.baml
 C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Style\Buttons.baml
 C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Style\Colors.baml
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Style\Fonts.baml
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Style\Texts.baml

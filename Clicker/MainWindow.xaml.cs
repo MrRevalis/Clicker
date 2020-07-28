@@ -24,7 +24,7 @@ namespace Clicker
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainVM();
+            this.DataContext = new MainVM(this);
         }
     }
 }

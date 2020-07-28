@@ -23,13 +23,87 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
-                        <Border x:Name="Container" Padding="10">
+                        <Border 
+                            Padding="{Binding WindowPadding}">
                             <Grid>
-                                <Border CornerRadius="6" Background="White">
+                                <Border x:Name="Container"
+                                        Background="{StaticResource mintCreamBrush}"
+                                        CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}" />
+
+                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}" 
+                                        Background="{StaticResource mintCreamBrush}">
                                     <Border.Effect>
-                                        <DropShadowEffect ShadowDepth="0" Opacity="0.2"></DropShadowEffect>
+                                        <DropShadowEffect 
+                                            ShadowDepth="0" 
+                                            Opacity="0.9"></DropShadowEffect>
                                     </Border.Effect>
                                 </Border>
+
+                                <Grid>
+                                    
+                                    <Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=Container}"></VisualBrush>
+                                    </Grid.OpacityMask>
+                                    
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="{Binding TitleBarGridHeight, FallbackValue=42}"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid
+                                        Grid.Column="0" 
+                                        Panel.ZIndex="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button 
+                                            Command="{Binding MenuCommand}"
+                                            Style="{StaticResource IconButton}"
+                                        ></Button>
+                                        <Viewbox Grid.Column="1">
+                                            <StackPanel
+                                                Orientation="Vertical"
+                                                >
+                                                <TextBlock 
+                                                    Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Title, FallbackValue=Clicker}"
+                                                    Style="{StaticResource TitleTextBlock}"
+                                                    ></TextBlock>
+                                                <TextBlock Text="{Binding TextBlockText, FallbackValue=MrRevalis}"></TextBlock>
+                                            </StackPanel>
+                                        </Viewbox>
+
+                                        <StackPanel 
+                                            Grid.Column="2"
+                                            Orientation="Horizontal">
+                                            <Button 
+                                                Style="{StaticResource TitleBarButton}"
+                                                Command="{Binding MinimalizeCommand}"
+                                                Content="_"></Button>
+                                            <Button 
+                                                Style="{StaticResource TitleBarButton}"
+                                                Command="{Binding CloseCommand}"
+                                                Content="X"></Button>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Border Grid.Row="1" Height="6" BorderThickness="0 0.2 0 0">
+                                        <Border.BorderBrush>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <GradientStop Color="{StaticResource mediumTurquoise}" Offset="0.0"></GradientStop>
+                                                <GradientStop Color="{StaticResource midnightGreen}" Offset="0.5"></GradientStop>
+                                                <GradientStop Color="{StaticResource mediumTurquoise}" Offset="1.0"></GradientStop>
+                                            </LinearGradientBrush>
+                                        </Border.BorderBrush>
+                                    </Border>
+
+                                    <Border Grid.Row="2" Padding="{Binding InnerContentPadding}" ClipToBounds="True">
+                                        <ContentPresenter Content="{TemplateBinding Content}"></ContentPresenter>
+                                    </Border>
+
+                                </Grid>
                             </Grid>
                         </Border>
                     </ControlTemplate>
@@ -37,130 +111,17 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="PreviewKeyDown">
-            <i:InvokeCommandAction 
-                Command="{Binding OnKeyClicked}"
-                CommandParameter="{Binding KeyPressed}"
-                ></i:InvokeCommandAction>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleBarHeight}"
+            GlassFrameThickness="0"
+            CornerRadius="0"
+            ></WindowChrome>
+    </WindowChrome.WindowChrome>
+
     <Grid>
-        <StackPanel>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                
-                <Label 
-                    Content="{Binding Source={x:Static resx:Resources.poz1}}"
-                    Grid.RowSpan="2"
-                    ></Label>
-
-                <ListView
-                    Grid.Column="1"
-                    Grid.RowSpan="2"
-                    Height="150"
-                    Width="140"
-                    HorizontalAlignment="Center"
-                    Foreground="Black"
-                    ItemsSource="{Binding MousePosition}"
-                    prop:ListViewValue.ListView="{Binding MousePosition, UpdateSourceTrigger=PropertyChanged}"
-                    >
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn 
-                                HeaderContainerStyle="{StaticResource headerColor}"
-                                Header="X"
-                                DisplayMemberBinding="{Binding X}"
-                                ></GridViewColumn>
-                            <GridViewColumn 
-                                HeaderContainerStyle="{StaticResource headerColor}"
-                                Header="Y"
-                                DisplayMemberBinding="{Binding Y}"
-                                ></GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-
-                <RadioButton 
-                    Grid.Row="3"
-                    GroupName="MouseButton"
-                    Tag="left"
-                    prop:RadioButtonClicked.RadioButton="{Binding MouseKey, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                    Content="{Binding Source={x:Static resx:Resources.left}}"
-                    ></RadioButton>
-                <RadioButton 
-                    GroupName="MouseButton"
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Tag="right"
-                    prop:RadioButtonClicked.RadioButton="{Binding MouseKey, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                    Content="{Binding Source={x:Static resx:Resources.right}}"
-                    ></RadioButton>
-                
-                <Label
-                    Grid.Row="4"
-                    ></Label>
-                <ComboBox
-                    ItemsSource="{Binding ProcessList}"
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    SelectedItem="{Binding SelectedProgram}"
-                    >
-                    <ComboBox.ItemTemplate>
-                        <ItemContainerTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding AppIcon}"></Image>
-                                <TextBlock Text="{Binding AppName}"></TextBlock>
-                            </StackPanel>
-                        </ItemContainerTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-
-                <Label
-                    Content="{Binding Source={x:Static resx:Resources.czas}}"
-                    Grid.Row="5"
-                ></Label>
-                <TextBox
-                    Grid.Column="1"
-                    Grid.Row="5"
-                    Style="{StaticResource timeText}"
-                    prop:TimeProperty.TimeBox="{Binding Path=Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    ></TextBox>
-                <Label 
-                    Content="[ms]"
-                    Grid.Row="5"
-                    Grid.Column="1"
-                    HorizontalContentAlignment="Right"
-                    HorizontalAlignment="Right"
-                    Width="auto"
-                    FontSize="15"
-                    ></Label>
-
-                <Button 
-                    Content="{Binding Source={x:Static resx:Resources.start}}"
-                    Grid.Row="6"
-                    Command="{Binding Path=Start}"
-                    Style="{StaticResource buttonStyle}"
-                    ></Button>
-                <Button
-                    Content="{Binding Source={x:Static resx:Resources.stop}}"
-                    Grid.Row="6"
-                    Grid.Column="1"
-                    Command="{Binding Path=Stop}"
-                    ></Button>
-            </Grid>
-        </StackPanel>
+        <Button Content="Test"></Button>
     </Grid>
 </Window>
