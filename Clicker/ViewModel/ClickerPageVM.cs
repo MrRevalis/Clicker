@@ -15,6 +15,7 @@ namespace Clicker.ViewModel
     using Clicker.Classes;
     using Clicker.Methods;
     using Clicker.ViewModel.Base;
+    using System.Windows.Controls;
     using static Clicker.Methods.MouseInput;
     public class ClickerPageVM : ViewModelBase
     {
@@ -68,6 +69,7 @@ namespace Clicker.ViewModel
         public ICommand Start { get; set; }
         public ICommand Stop { get; set; }
         public ICommand OnKeyClicked { get; set; }
+        public ICommand OnLoad { get; set; }
         #endregion
         #region Private Methods
         private GlobalKeyboardHook _globalKeyboardHook;
@@ -78,6 +80,7 @@ namespace Clicker.ViewModel
             OnKeyClicked = new RelayCommand(() => KeyClickedMethod());
             Start = new RelayCommand(() => StartMethod());
             Stop = new RelayCommand(() => StopMethod());
+            OnLoad = new RelayParameterizedCommand((parameter) => OnLoadCommand(parameter));
 
             MouseInput = new INPUT[1];
             MouseInput[0].type = 0;
@@ -98,6 +101,13 @@ namespace Clicker.ViewModel
         }
         #endregion
         #region Methods
+
+        private void OnLoadCommand(object something)
+        {
+            TextBox list = something as TextBox;
+            list.Focus();
+        }
+
         private ObservableCollection<Program> GetListOfProcesses()
         {
             ObservableCollection<Program> listOfProcesses = new ObservableCollection<Program>();

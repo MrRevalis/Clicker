@@ -12,6 +12,9 @@
       xmlns:resx="clr-namespace:Clicker.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="300"
+    x:Name="windowClicker"
+      prop:WhichKeyClicked.WhichKey="{Binding KeyPressed, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+
       Title="ClickerPage">
     
     <i:Interaction.Triggers>
@@ -21,9 +24,14 @@
                 CommandParameter="{Binding KeyPressed}"
                 ></i:InvokeCommandAction>
         </i:EventTrigger>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding OnLoad}" 
+                CommandParameter="{Binding ElementName=xd}"
+                ></i:InvokeCommandAction>
+        </i:EventTrigger>
     </i:Interaction.Triggers>
     
-    <Grid>
+    <Grid Background="AliceBlue">
         <StackPanel>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -46,6 +54,7 @@
                     ></Label>
 
                 <ListView
+                    x:Name="positionList"
                     Grid.Column="1"
                     Grid.RowSpan="2"
                     Height="150"
@@ -111,6 +120,7 @@
                     Grid.Row="5"
                 ></Label>
                 <TextBox
+                    x:Name="xd"
                     Grid.Column="1"
                     Grid.Row="5"
                     Style="{StaticResource timeText}"

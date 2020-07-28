@@ -15,7 +15,6 @@
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
-        prop:WhichKeyClicked.WhichKey="{Binding KeyPressed, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
         >
 
     <Window.Resources>

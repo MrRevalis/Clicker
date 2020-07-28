@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Clicker.AttachedProperties
@@ -29,14 +30,14 @@ namespace Clicker.AttachedProperties
 
         public static void OnWhichKeyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            Window window = sender as Window;
+            Page window = sender as Page;
 
             window.PreviewKeyDown += Window_PreviewKeyDown;
         }
 
         private static void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            Window window = sender as Window;
+            Page window = sender as Page;
             SetWhichKey(window, e.Key);
         }
     }
