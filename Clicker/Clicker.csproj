@@ -78,9 +78,17 @@
     <Compile Include="Classes\MouseInput.cs" />
     <Compile Include="Classes\Position.cs" />
     <Compile Include="Classes\Program.cs" />
+    <Compile Include="Converters\ApplicationPageValueConverter.cs" />
+    <Compile Include="Converters\BaseValueConverter.cs" />
+    <Compile Include="DataModel\ApplicationPage.cs" />
+    <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="Pages\ClickerPage.xaml.cs">
+      <DependentUpon>ClickerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Base\RelayParameterizedCommand.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="ViewModel\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModel\ClickerPageVM.cs" />
     <Compile Include="ViewModel\MainVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -95,6 +103,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\ClickerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Style\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -151,5 +163,6 @@
   <ItemGroup>
     <Resource Include="Images\clickerIcon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

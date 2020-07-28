@@ -8,7 +8,7 @@
         xmlns:prop="clr-namespace:Clicker.AttachedProperties"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="Clicker" 
+        Title="Auto-Clicker" 
         Height="400" 
         Width="300"
         ResizeMode="NoResize"
@@ -72,7 +72,10 @@
                                                     Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Title, FallbackValue=Clicker}"
                                                     Style="{StaticResource TitleTextBlock}"
                                                     ></TextBlock>
-                                                <TextBlock Text="{Binding TextBlockText, FallbackValue=MrRevalis}"></TextBlock>
+                                                <TextBlock 
+                                                    Text="{Binding TextBlockText, FallbackValue=MrRevalis}"
+                                                    Style="{StaticResource TitleTextBlockSecond}"
+                                                    ></TextBlock>
                                             </StackPanel>
                                         </Viewbox>
 
@@ -89,6 +92,7 @@
                                                 Content="X"></Button>
                                         </StackPanel>
                                     </Grid>
+                                    
                                     <Border Grid.Row="1" Height="6" BorderThickness="0 0.2 0 0">
                                         <Border.BorderBrush>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">

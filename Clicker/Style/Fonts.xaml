@@ -9,13 +9,12 @@
     <FontFamily x:Key="PlayfairItalic">pack://aplication;,,,/Fonts/#Playfair Display Italic</FontFamily>
     <FontFamily x:Key="PlayfairMedium">pack://aplication;,,,/Fonts/#Playfair Display Medium</FontFamily>
 
-<!--
     <Style TargetType="{x:Type TextBlock}" x:Key="TextBlockFont">
-        <Setter Property="FontFamily" Value="{StaticResource PlayfairMedium}"></Setter>
+        <Setter Property="FontFamily" Value="{StaticResource PlayfairRegular}"></Setter>
     </Style>
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockFont}"></Style>
-    -->
 
+    <system:Double x:Key="FontSizeExtraSmall">7</system:Double>
     <system:Double x:Key="FontSizeSmall">10</system:Double>
     <system:Double x:Key="FontSizeNormal">15</system:Double>
     <system:Double x:Key="FontSizeLarge">20</system:Double>

@@ -2,7 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Clicker.Style">
     <Style TargetType="{x:Type TextBlock}" x:Key="TitleTextBlock">
-        <Setter Property="Foreground" Value="Red"></Setter>
+        <Setter Property="Foreground" Value="{StaticResource RaisinBlackBrush}"></Setter>
         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}"></Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="TitleTextBlockSecond" BasedOn="{StaticResource TitleTextBlock}">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeExtraSmall}"></Setter>
+        <Setter Property="Foreground" Value="{StaticResource RaisinBlackBrush}"></Setter>
     </Style>
 </ResourceDictionary>

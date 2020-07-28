@@ -29,6 +29,7 @@ namespace Clicker.ViewModel
 
         private int mOuterMarginSize = 10;
         private int mWindowRadius = 10;
+        private ApplicationPage currentPage = ApplicationPage.Clicker;
         #endregion
 
         #region Commands
