@@ -105,7 +105,7 @@ namespace Clicker.ViewModel
         private void OnLoadCommand(object something)
         {
             TextBox list = something as TextBox;
-            list.Focus();
+            //list.Focus();
         }
 
         private ObservableCollection<Program> GetListOfProcesses()
