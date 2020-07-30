@@ -55,3 +55,4 @@ C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Release\Clicker.csproj.CoreCom
 C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Release\Clicker.csproj.CopyComplete
 C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Release\Clicker.exe
 C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Release\Clicker.pdb
+C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Release\Style\ListViewStyle.baml
