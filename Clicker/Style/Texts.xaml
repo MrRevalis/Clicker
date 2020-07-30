@@ -13,34 +13,4 @@
         <Setter Property="Foreground" Value="{StaticResource RaisinBlackBrush}"></Setter>
     </Style>
 
-    <Style TargetType="{x:Type ListView}" x:Key="ListViewStyle">
-        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-        <Setter Property="Height" Value="100"></Setter>
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"></Setter>
-    </Style>
-    
-    <Style TargetType="{x:Type GridViewColumnHeader}" x:Key="headerColor">
-        <Setter Property="IsEnabled" Value="False"></Setter>
-        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
-                    <Grid>
-                        <Border
-                            Background="{StaticResource bittersweetBrush}"
-                            >
-                            <TextBlock
-                                Text="{TemplateBinding Content}"
-                                HorizontalAlignment="Center"
-                                Width="100"
-                                Foreground="{StaticResource mintCreamBrush}"
-                                ></TextBlock>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
 </ResourceDictionary>

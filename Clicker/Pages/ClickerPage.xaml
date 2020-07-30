@@ -64,29 +64,26 @@
 
 
                     <ListView
-                    x:Name="positionList"
-                    Grid.ColumnSpan="2"
-                    Grid.Row="1"
-                    Style="{StaticResource ListViewStyle}"
-                    ItemsSource="{Binding MousePosition}"
-                    prop:ListViewValue.ListView="{Binding MousePosition, UpdateSourceTrigger=PropertyChanged}"
+                        x:Name="positionList"
+                        Grid.ColumnSpan="2"
+                        Grid.Row="1"
+                        ItemsSource="{Binding MousePosition}"
+                        prop:ListViewValue.ListView="{Binding MousePosition, UpdateSourceTrigger=PropertyChanged}"
                     >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn 
-                                    HeaderContainerStyle="{StaticResource headerColor}"
                                     Header="X"
                                     DisplayMemberBinding="{Binding X}"
                                 ></GridViewColumn>
                                 <GridViewColumn 
-                                    HeaderContainerStyle="{StaticResource headerColor}"
                                     Header="Y"
                                     DisplayMemberBinding="{Binding Y}"
                                 ></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
-
+                    <Button Grid.Row="3" Height="20"></Button>
                 </Grid>
             </Border>
         </StackPanel>
