@@ -64,7 +64,6 @@
 
 
                     <ListView
-                        x:Name="positionList"
                         Grid.ColumnSpan="2"
                         Grid.Row="1"
                         ItemsSource="{Binding MousePosition}"

@@ -1,13 +1,16 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Clicker.Style" 
-                    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+                    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+                    xmlns:resx="clr-namespace:Clicker.Properties"
+                    >
 
     <Style TargetType="{x:Type ListView}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListView">
                     <Border
+                        Width="200"
                         Height="100"
                         Background="{StaticResource mediumTurquoiseBrush}">
                         <ScrollViewer Style="{DynamicResource ScrollViewerStyle}">
@@ -19,6 +22,21 @@
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type ListViewItem}">
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"></Setter>
+        <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="ToolTip" Value="{Binding Source={x:Static resx:Resources.tooltip}}"></Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Green"></Setter>
+                <Setter Property="BorderThickness" Value="0"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <Style x:Key="ScrollViewerStyle" TargetType="ScrollViewer">
         <Setter Property="Template">
             <Setter.Value>
@@ -58,14 +76,21 @@
     </Style>
 
     <Style TargetType="GridViewColumnHeader" x:Key="HeaderStyle">
-        <Setter Property="Background" Value="Red"></Setter>
-        <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
-                    <Grid>
-                        <Border>
-                            <ContentPresenter></ContentPresenter>
+                    <Grid
+                        Width="90"
+                        >
+                        <Border
+                            Background="Red"
+                            BorderThickness="0"
+                            >
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                >
+                                <ContentPresenter></ContentPresenter>
+                            </TextBlock>
                         </Border>
                     </Grid>
                 </ControlTemplate>
