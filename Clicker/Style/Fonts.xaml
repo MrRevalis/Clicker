@@ -12,7 +12,21 @@
     <Style TargetType="{x:Type TextBlock}" x:Key="TextBlockFont">
         <Setter Property="FontFamily" Value="{StaticResource PlayfairRegular}"></Setter>
     </Style>
-    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockFont}"></Style>
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockFont}">
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"></Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" x:Key="TextBoxFont">
+        <Setter Property="FontFamily" Value="{StaticResource PlayfairRegular}"></Setter>
+    </Style>
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxFont}">
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"></Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Label}">
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+    </Style>
 
     <system:Double x:Key="FontSizeExtraSmall">7</system:Double>
     <system:Double x:Key="FontSizeSmall">10</system:Double>

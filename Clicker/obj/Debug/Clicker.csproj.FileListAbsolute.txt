@@ -69,7 +69,6 @@ C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Pages\ClickerPage.bam
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Style\Buttons.baml
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Style\Colors.baml
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Style\Fonts.baml
-C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Style\Style.baml
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Style\Texts.baml
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Clicker.g.resources
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Clicker.Properties.Resources.resources
@@ -79,3 +78,5 @@ C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Clicker.csproj.CopyCo
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Clicker.exe
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Clicker.pdb
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Clicker.csprojAssemblyReference.cache
+C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Style\ComboBoxStyle.baml
+C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Style\ListViewStyle.baml

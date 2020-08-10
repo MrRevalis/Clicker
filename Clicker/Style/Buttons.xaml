@@ -3,14 +3,16 @@
                     xmlns:local="clr-namespace:Clicker.Style">
 
     <Style TargetType="{x:Type Button}" x:Key="buttonStyle">
-        <Setter Property="Foreground" Value="{StaticResource BeigeBrush}"></Setter>
+        <Setter Property="Width" Value="90"></Setter>
+        <Setter Property="Height" Value="30"></Setter>
+        <Setter Property="Margin" Value="10 10 10 10"></Setter>
+        
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
                         <Border 
-                            Name="Border" 
-                            Background="{StaticResource ThistleBrush}"
+                            Background="{StaticResource mintCreamBrush}"
                             CornerRadius="5"
                             >
                             <ContentPresenter
@@ -79,10 +81,14 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource bittersweetBrush}"></Setter>
+                <Setter Property="Background" Value="{StaticResource VermillionBrush}"></Setter>
             </Trigger>
         </Style.Triggers>
         
+    </Style>
+
+    <Style TargetType="{x:Type RadioButton}" x:Key="RadioButtonStyle">
+        <Setter Property="Margin" Value="10 5 10 10"></Setter>
     </Style>
     
 </ResourceDictionary>

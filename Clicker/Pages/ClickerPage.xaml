@@ -1,21 +1,21 @@
-﻿<local:BasePage 
-        x:TypeArguments="vm:ClickerPageVM"
-        x:Class="Clicker.Pages.ClickerPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Clicker.Pages"
-      xmlns:vm="clr-namespace:Clicker.ViewModel"
-      xmlns:prop="clr-namespace:Clicker.AttachedProperties"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:resx="clr-namespace:Clicker.Properties"
-      mc:Ignorable="d" 
-      d:DesignHeight="360" d:DesignWidth="300"
+﻿<local:BasePage
+    x:TypeArguments="vm:ClickerPageVM"
+    x:Class="Clicker.Pages.ClickerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:Clicker.Pages"
+    xmlns:vm="clr-namespace:Clicker.ViewModel"
+    xmlns:prop="clr-namespace:Clicker.AttachedProperties"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:resx="clr-namespace:Clicker.Properties"
+    mc:Ignorable="d" 
+    
+    d:DesignHeight="400" d:DesignWidth="300"
     x:Name="windowClicker"
-      prop:WhichKeyClicked.WhichKey="{Binding KeyPressed, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-
-      Title="ClickerPage">
+    prop:WhichKeyClicked.WhichKey="{Binding KeyPressed, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+    Title="ClickerPage">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="PreviewKeyDown">
@@ -53,6 +53,8 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <Label 
@@ -82,7 +84,82 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Grid.Row="3" Height="20"></Button>
+
+                    <Label
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        Content="{Binding Source={x:Static resx:Resources.mouseButton}}"
+                        HorizontalContentAlignment="Center"
+                        ></Label>
+                    
+                    <RadioButton
+                        Content="{Binding Source={x:Static resx:Resources.left}}"
+                        prop:RadioButtonClicked.RadioButton="{Binding MouseKey}"
+                        Tag="left"
+                        Grid.Row="4"
+                        Style="{StaticResource RadioButtonStyle}"
+                        ></RadioButton>
+                    <RadioButton
+                        Content="{Binding Source={x:Static resx:Resources.right}}"
+                        prop:RadioButtonClicked.RadioButton="{Binding MouseKey}"
+                        Tag="right"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Style="{StaticResource RadioButtonStyle}"
+                        ></RadioButton>
+
+                    <Label
+                        Content="{Binding Source={x:Static resx:Resources.choosePro}}"
+                        Grid.Row="5"
+                        Grid.ColumnSpan="2"
+                        HorizontalContentAlignment="Center"
+                        ></Label>
+
+                    <ComboBox
+                        Grid.Row="6"
+                        Grid.ColumnSpan="2"
+                        ItemsSource="{Binding ProcessList}"
+                        SelectedItem="{Binding SelectedProgram}"
+                        >
+                        <ComboBox.ItemTemplate>
+                            <ItemContainerTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding AppIcon}"></Image>
+                                    <TextBlock 
+                                        Text="{Binding AppName}"
+                                        VerticalAlignment="Center"
+                                        ></TextBlock>
+                                </StackPanel>
+                            </ItemContainerTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Label
+                        Grid.Row="7"
+                        Grid.ColumnSpan="2"
+                        Content="{Binding Source={x:Static resx:Resources.time}}"
+                        ></Label>
+
+                    <TextBox
+                        Grid.Row="8"
+                        Grid.ColumnSpan="2"
+                        prop:TimeProperty.TimeBox="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ></TextBox>
+
+                    <Button
+                        Content="{Binding Source={x:Static resx:Resources.start}}"
+                        Grid.Row="9"
+                        Command="{Binding Start}"
+                        Style="{StaticResource buttonStyle}"
+                        ></Button>
+                    <Button
+                        Content="{Binding Source={x:Static resx:Resources.stop}}"
+                        Grid.Row="9"
+                        Grid.Column="1"
+                        Command="{Binding Stop}"
+                        Style="{StaticResource buttonStyle}"
+                        ></Button>
+                    
                 </Grid>
             </Border>
         </StackPanel>
