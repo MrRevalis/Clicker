@@ -1,34 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Clicker.AttachedProperties
 {
     public static class ButtonIsRunningProperty
     {
-        public static readonly DependencyProperty ButtonProperty =
+        public static readonly DependencyProperty ButtonRunningProperty =
             DependencyProperty.RegisterAttached(
-                "Button",
+                "ButtonRunning",
                 typeof(bool),
                 typeof(ButtonIsRunningProperty),
-                new PropertyMetadata(false, OnButtonPropertyChanged)
-                );
+                new PropertyMetadata(false, OnButtonRunning));
 
-        public static void SetButton(DependencyObject dependencyObject, bool value)
+        public static void SetButtonRunning(DependencyObject dependencyObject, bool value)
         {
-            dependencyObject.SetValue(ButtonProperty, value);
+            dependencyObject.SetValue(ButtonRunningProperty, value);
         }
 
-        public static bool GetButton(DependencyObject dependencyObject)
+        public static bool GetButtonRunning(DependencyObject dependencyObject)
         {
-            return (bool)dependencyObject.GetValue(ButtonProperty);
+            return (bool)dependencyObject.GetValue(ButtonRunningProperty);
         }
 
 
-        private static void OnButtonPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnButtonRunning(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            Button x = sender as Button;
+
+            x.Click += X_Click;
+        }
+
+        private static void X_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }

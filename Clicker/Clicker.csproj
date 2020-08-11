@@ -83,6 +83,7 @@
     <Compile Include="Converters\BaseValueConverter.cs" />
     <Compile Include="Converters\BooleanToVisibility.cs" />
     <Compile Include="DataModel\ApplicationPage.cs" />
+    <Compile Include="Expression\ExpressionHelpers.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\ClickerPage.xaml.cs">
       <DependentUpon>ClickerPage.xaml</DependentUpon>

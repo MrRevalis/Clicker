@@ -59,7 +59,7 @@ namespace Clicker.ViewModel
         #region Public Properties
         public string Time { get; set; }
         public string MouseKey { get; set; }
-        public bool StartIsRunning { get; set; }
+        public bool StartIsRunning { get; set; } = false;
         public CancellationToken Token { get; set; }
         public CancellationTokenSource TokenSource { get; set; }
         public INPUT[] MouseInput { get; set; }
@@ -126,9 +126,10 @@ namespace Clicker.ViewModel
                 {
                     if (System.IO.File.Exists(p.ExecutablePath))
                     {
-                        Icon icon = Icon.ExtractAssociatedIcon(p.ExecutablePath);
                         try
                         {
+                            Icon icon = Icon.ExtractAssociatedIcon(p.ExecutablePath);
+
                             if (Process.GetProcessById((int)p.ProcessId).MainWindowHandle != IntPtr.Zero)
                             {
                                 listOfProcesses.Add(new Program(icon, p.Name, p.ProcessId, p.ExecutablePath));
@@ -184,9 +185,9 @@ namespace Clicker.ViewModel
                 watcher.Start();
 
 
-                await RunCommand(() => StartIsRunning, async () =>
+                await RunCommand(() => this.StartIsRunning, async () =>
                   {
-                      Task.Run(() => StartClicking(Token), Token);
+                      await Task.Run(() => StartClicking(Token), Token);
                   });
             }
         }

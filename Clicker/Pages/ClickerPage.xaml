@@ -148,18 +148,18 @@
                         ></TextBox>
 
                     <Button
-                        prop:ButtonIsRunningProperty.Button="{Binding StartIsRunning}"
                         Content="{Binding Source={x:Static resx:Resources.start}}"
                         Grid.Row="9"
                         Command="{Binding Start}"
                         Style="{StaticResource buttonStyle}"
+                        prop:ButtonIsRunningProperty.ButtonRunning="{Binding StartIsRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ></Button>
                     <Button
                         Content="{Binding Source={x:Static resx:Resources.stop}}"
                         Grid.Row="9"
                         Grid.Column="1"
                         Command="{Binding Stop}"
-                        Style="{StaticResource buttonStyle}"
+                        Style="{StaticResource buttonStyle2}"
                         ></Button>
                     
                 </Grid>

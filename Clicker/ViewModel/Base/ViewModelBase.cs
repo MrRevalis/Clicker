@@ -19,16 +19,12 @@ namespace Clicker.ViewModel.Base
 
         protected async Task RunCommand(Expression<Func<bool>> updatingFlag, Func<Task> action)
         {
-            if (updatingFlag.Compile().Invoke())
+            if (updatingFlag.GetPropertyValue())
             {
                 return;
             }
 
-            var expression = (updatingFlag as LambdaExpression).Body as MemberExpression;
-            var propertyInfo = (PropertyInfo)expression.Member;
-            var target = Expression.Lambda(expression.Expression).Compile().DynamicInvoke();
-
-            propertyInfo.SetValue(target, true);
+            updatingFlag.SetPropertyValue(true);
 
             try
             {
@@ -36,7 +32,7 @@ namespace Clicker.ViewModel.Base
             }
             finally
             {
-                propertyInfo.SetValue(target, false);
+                updatingFlag.SetPropertyValue(false);
             }
         }
     }
