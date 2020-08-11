@@ -59,6 +59,7 @@ namespace Clicker.ViewModel
         #region Public Properties
         public string Time { get; set; }
         public string MouseKey { get; set; }
+        public bool StartIsRunning { get; set; }
         public CancellationToken Token { get; set; }
         public CancellationTokenSource TokenSource { get; set; }
         public INPUT[] MouseInput { get; set; }
@@ -104,8 +105,8 @@ namespace Clicker.ViewModel
 
         private void OnLoadCommand(object something)
         {
-            TextBox list = something as TextBox;
-            //list.Focus();
+            ListView list = something as ListView;
+            list.Focus();
         }
 
         private ObservableCollection<Program> GetListOfProcesses()
@@ -167,7 +168,7 @@ namespace Clicker.ViewModel
             }
         }
 
-        public void StartMethod()
+        public async Task StartMethod()
         {
             if (SelectedProgram != null && Time != string.Empty && MousePosition.Count >= 1 && MouseKey != string.Empty)
             {
@@ -183,7 +184,10 @@ namespace Clicker.ViewModel
                 watcher.Start();
 
 
-                Task.Run(() => StartClicking(Token), Token);
+                await RunCommand(() => StartIsRunning, async () =>
+                  {
+                      Task.Run(() => StartClicking(Token), Token);
+                  });
             }
         }
 

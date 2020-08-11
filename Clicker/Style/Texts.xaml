@@ -22,6 +22,7 @@
         <Setter Property="Height" Value="30"></Setter>
         <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
     </Style>
     
 </ResourceDictionary>

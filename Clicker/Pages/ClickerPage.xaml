@@ -26,7 +26,7 @@
         </i:EventTrigger>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding OnLoad}" 
-                CommandParameter="{Binding ElementName=xd}"
+                CommandParameter="{Binding ElementName=listViewName}"
                 ></i:InvokeCommandAction>
         </i:EventTrigger>
     </i:Interaction.Triggers>
@@ -66,6 +66,7 @@
 
 
                     <ListView
+                        x:Name="listViewName"
                         Grid.ColumnSpan="2"
                         Grid.Row="1"
                         ItemsSource="{Binding MousePosition}"
@@ -101,7 +102,7 @@
                         ></RadioButton>
                     <RadioButton
                         Content="{Binding Source={x:Static resx:Resources.right}}"
-                        prop:RadioButtonClicked.RadioButton="{Binding MouseKey}"
+                        prop:RadioButtonClicked.RadioButton="{Binding MouseKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Tag="right"
                         Grid.Row="4"
                         Grid.Column="1"

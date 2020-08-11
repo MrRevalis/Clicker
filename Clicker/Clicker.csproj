@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttachedProperties\ButtonIsRunningProperty.cs" />
     <Compile Include="AttachedProperties\ListViewValue.cs" />
     <Compile Include="AttachedProperties\RadioButtonClicked.cs" />
     <Compile Include="AttachedProperties\WhichKeyClicked.cs" />
