@@ -148,6 +148,7 @@
                         ></TextBox>
 
                     <Button
+                        prop:ButtonIsRunningProperty.Button="{Binding StartIsRunning}"
                         Content="{Binding Source={x:Static resx:Resources.start}}"
                         Grid.Row="9"
                         Command="{Binding Start}"

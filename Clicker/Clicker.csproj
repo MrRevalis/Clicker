@@ -81,6 +81,7 @@
     <Compile Include="Classes\Program.cs" />
     <Compile Include="Converters\ApplicationPageValueConverter.cs" />
     <Compile Include="Converters\BaseValueConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibility.cs" />
     <Compile Include="DataModel\ApplicationPage.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\ClickerPage.xaml.cs">
