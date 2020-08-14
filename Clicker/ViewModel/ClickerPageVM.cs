@@ -59,7 +59,17 @@ namespace Clicker.ViewModel
         #region Public Properties
         public string Time { get; set; }
         public string MouseKey { get; set; }
-        public bool StartIsRunning { get; set; } = false;
+        private bool startIsRunning;
+        public bool StartIsRunning
+        {
+            get { return startIsRunning; }
+            set
+            {
+                startIsRunning = value;
+                OnPropertyChanged(nameof(startIsRunning));
+                MessageBox.Show(startIsRunning.ToString());
+            }
+        }
         public CancellationToken Token { get; set; }
         public CancellationTokenSource TokenSource { get; set; }
         public INPUT[] MouseInput { get; set; }
@@ -79,7 +89,7 @@ namespace Clicker.ViewModel
         public ClickerPageVM()
         {
             OnKeyClicked = new RelayCommand(() => KeyClickedMethod());
-            Start = new RelayCommand(() => StartMethod());
+            Start = new RelayCommand(async() => await StartMethod());
             Stop = new RelayCommand(() => StopMethod());
             OnLoad = new RelayParameterizedCommand((parameter) => OnLoadCommand(parameter));
 
@@ -171,7 +181,7 @@ namespace Clicker.ViewModel
 
         public async Task StartMethod()
         {
-            if (SelectedProgram != null && Time != string.Empty && MousePosition.Count >= 1 && MouseKey != string.Empty)
+            /*if (SelectedProgram != null && Time != string.Empty && MousePosition.Count >= 1 && MouseKey != string.Empty)
             {
                 TokenSource = new CancellationTokenSource();
                 Token = TokenSource.Token;
@@ -189,7 +199,11 @@ namespace Clicker.ViewModel
                   {
                       await Task.Run(() => StartClicking(Token), Token);
                   });
-            }
+            }*/
+            await RunCommand(() => this.StartIsRunning, async () =>
+            {
+                await Task.Delay(5000);
+            });
         }
 
         private void appClosed(object sender, EventArrivedEventArgs e)
@@ -259,7 +273,7 @@ namespace Clicker.ViewModel
                 Thread.Sleep(10);
             }
             SetCursorPos(newPosition.X, newPosition.Y);
-            Thread.Sleep(time - (steps * 20));
+            Thread.Sleep(Math.Abs(time - (steps * 20)));
         }
         private void OnKeyPressed(object sender, GlobalKeyboardHookEventArgs e)
         {

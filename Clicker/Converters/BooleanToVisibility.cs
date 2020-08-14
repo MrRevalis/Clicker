@@ -13,19 +13,9 @@ namespace Clicker
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (parameter == null)
-            {
-                if ((bool)value)
-                    return Visibility.Hidden;
-                else
-                    return Visibility.Visible;
-            }
+                return (bool)value ? Visibility.Hidden : Visibility.Visible;
             else
-            {
-                if ((bool)value)
-                    return Visibility.Visible;
-                else
-                    return Visibility.Hidden;
-            }
+                return (bool)value ? Visibility.Visible : Visibility.Hidden;
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
