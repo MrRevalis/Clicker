@@ -151,7 +151,7 @@
                         Grid.Row="9"
                         Command="{Binding Start}"
                         Style="{StaticResource buttonStyle}"
-                        prop:IsBusyProperty.Value="{Binding StartIsRunning, Mode=TwoWay}"
+                        prop:ActionRunning.ActionIsRunning="{Binding StartIsRunning}"
                         ></Button>
                     <Button
                         Content="{Binding Source={x:Static resx:Resources.stop}}"

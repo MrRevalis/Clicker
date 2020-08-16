@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/clickericon.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/load.png")]
 
 

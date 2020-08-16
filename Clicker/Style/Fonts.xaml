@@ -8,6 +8,7 @@
     <FontFamily x:Key="PlayfairBold">pack://aplication;,,,/Fonts/#Playfair Display Bold</FontFamily>
     <FontFamily x:Key="PlayfairItalic">pack://aplication;,,,/Fonts/#Playfair Display Italic</FontFamily>
     <FontFamily x:Key="PlayfairMedium">pack://aplication;,,,/Fonts/#Playfair Display Medium</FontFamily>
+    <FontFamily x:Key="FontAwesome">pack://aplication;,,,/Fonts/#Font Awesome 5 Free Solid</FontFamily>
 
     <Style TargetType="{x:Type TextBlock}" x:Key="TextBlockFont">
         <Setter Property="FontFamily" Value="{StaticResource PlayfairRegular}"></Setter>

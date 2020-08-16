@@ -9,8 +9,6 @@
         <Setter Property="Width" Value="90"></Setter>
         <Setter Property="Height" Value="30"></Setter>
         <Setter Property="Margin" Value="10 10 10 10"></Setter>
-
-        <Setter Property="prop:IsBusyProperty.Value" Value="false"></Setter>
         
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -24,18 +22,19 @@
                             
                             <Grid>
                                 <TextBlock
-                                    Visibility="{TemplateBinding prop:IsBusyProperty.Value, Converter={all:BooleanToVisibility}}"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Margin="5 0 5 0"
+                                    Visibility="{TemplateBinding prop:ActionRunning.ActionIsRunning,Converter={all:BooleanToVisibility}}"
                                     >
                                     <ContentPresenter
                                         Content="{Binding Source={x:Static resx:Resources.start}}"
                                         ></ContentPresenter>
                                 </TextBlock>
                                 <TextBlock
-                                    Visibility="{TemplateBinding prop:IsBusyProperty.Value, Converter={all:BooleanToVisibility}, ConverterParameter=true}"
-                                    Text="Busy">
+                                    FontFamily="{StaticResource FontAwesome}"
+                                    Visibility="{TemplateBinding prop:ActionRunning.ActionIsRunning,Converter={all:BooleanToVisibility},ConverterParameter=true}"
+                                    Text="&#xf110;">
                                     <ContentPresenter></ContentPresenter>
                                 </TextBlock>
                             </Grid>
