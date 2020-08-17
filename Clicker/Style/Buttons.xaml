@@ -5,6 +5,12 @@
                     xmlns:resx="clr-namespace:Clicker.Properties"
                     >
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colors.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="Fonts.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="Texts.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+    
     <Style TargetType="{x:Type Button}" x:Key="buttonStyle">
         <Setter Property="Width" Value="90"></Setter>
         <Setter Property="Height" Value="30"></Setter>
@@ -32,7 +38,10 @@
                                         ></ContentPresenter>
                                 </TextBlock>
                                 <TextBlock
+                                    Style="{StaticResource RotateTextBlock}"
                                     FontFamily="{StaticResource FontAwesome}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
                                     Visibility="{TemplateBinding prop:ActionRunning.ActionIsRunning,Converter={all:BooleanToVisibility},ConverterParameter=true}"
                                     Text="&#xf110;">
                                     <ContentPresenter></ContentPresenter>

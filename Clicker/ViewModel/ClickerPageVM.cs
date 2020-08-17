@@ -67,7 +67,6 @@ namespace Clicker.ViewModel
             {
                 startIsRunning = value;
                 OnPropertyChanged(nameof(startIsRunning));
-                MessageBox.Show(startIsRunning.ToString());
             }
         }
         public CancellationToken Token { get; set; }
