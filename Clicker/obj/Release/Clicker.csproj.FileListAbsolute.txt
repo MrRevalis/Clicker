@@ -58,3 +58,6 @@ C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Release\Clicker.pdb
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Release\Style\ListViewStyle.baml
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Release\Style\ComboBoxStyle.baml
 C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Release\Style\ComboBoxStyle.baml
+C:\Users\Dominik\source\repos\Clicker\Clicker\bin\Release\pl-PL\Clicker.resources.dll
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Release\Clicker.Properties.Resources.pl-PL.resources
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Release\pl-PL\Clicker.resources.dll

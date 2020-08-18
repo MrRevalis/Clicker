@@ -81,3 +81,6 @@ C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Clicker.csproj.CoreCo
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Clicker.csproj.CopyComplete
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Clicker.exe
 C:\Users\Dominik\OneDrive\Pulpit\Clicker\Clicker\obj\Debug\Clicker.pdb
+C:\Users\Dominik\source\repos\Clicker\Clicker\bin\Debug\pl-PL\Clicker.resources.dll
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\Clicker.Properties.Resources.pl-PL.resources
+C:\Users\Dominik\source\repos\Clicker\Clicker\obj\Debug\pl-PL\Clicker.resources.dll

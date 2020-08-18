@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="choosePro" xml:space="preserve">
-    <value>Select an application</value>
+    <value>Wybierz aplikacje</value>
   </data>
   <data name="left" xml:space="preserve">
-    <value>Left</value>
+    <value>Lewy</value>
   </data>
   <data name="mouseButton" xml:space="preserve">
-    <value>Mouse button</value>
+    <value>Przycisk myszy</value>
   </data>
   <data name="poz1" xml:space="preserve">
-    <value>Position [F1]</value>
+    <value>Pozycja [F1]</value>
   </data>
   <data name="right" xml:space="preserve">
-    <value>Right</value>
+    <value>Prawy</value>
   </data>
   <data name="start" xml:space="preserve">
     <value>Start</value>
@@ -139,9 +139,9 @@
     <value>Stop [F5]</value>
   </data>
   <data name="time" xml:space="preserve">
-    <value>Time [ms]</value>
+    <value>Czas [ms]</value>
   </data>
   <data name="tooltip" xml:space="preserve">
-    <value>Double-Click, to delete position</value>
+    <value>Double-Click, aby usunąć pozycje</value>
   </data>
 </root>

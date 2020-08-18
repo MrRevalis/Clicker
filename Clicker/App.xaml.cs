@@ -13,5 +13,10 @@ namespace Clicker
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            /*System.Threading.Thread.CurrentThread.CurrentUICulture =
+                new System.Globalization.CultureInfo("pl-PL");*/
+        }
     }
 }
