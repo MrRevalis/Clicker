@@ -27,6 +27,12 @@
 
     <Style TargetType="{x:Type TextBlock}" x:Key="RotateTextBlock">
         <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"></Setter>
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"></Setter>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"></Setter>
+        <Setter Property="Text" Value="&#xf110;"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        
         <Setter Property="RenderTransform">
             <Setter.Value>
                 <RotateTransform></RotateTransform>

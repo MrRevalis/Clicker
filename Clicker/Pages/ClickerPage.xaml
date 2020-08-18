@@ -33,31 +33,25 @@
 
     <Grid>
         <StackPanel>
-            <Border
-                CornerRadius="10"
-                Background="{StaticResource midnightGreenBrush}"
-                Width="250"
-                Margin="5 20 5 20"
-                >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
 
-                    <Label 
+                <Label 
                         Content="{Binding Source={x:Static resx:Resources.poz1}}"
                         Grid.Row="0"
                         Grid.ColumnSpan="2"
@@ -65,42 +59,42 @@
                     ></Label>
 
 
-                    <ListView
+                <ListView
                         x:Name="listViewName"
                         Grid.ColumnSpan="2"
                         Grid.Row="1"
                         ItemsSource="{Binding MousePosition}"
                         prop:ListViewValue.ListView="{Binding MousePosition, UpdateSourceTrigger=PropertyChanged}"
                     >
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn 
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn 
                                     Header="X"
                                     DisplayMemberBinding="{Binding X}"
                                 ></GridViewColumn>
-                                <GridViewColumn 
+                            <GridViewColumn 
                                     Header="Y"
                                     DisplayMemberBinding="{Binding Y}"
                                 ></GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
-                    <Label
+                <Label
                         Grid.Row="3"
                         Grid.ColumnSpan="2"
                         Content="{Binding Source={x:Static resx:Resources.mouseButton}}"
                         HorizontalContentAlignment="Center"
                         ></Label>
-                    
-                    <RadioButton
+
+                <RadioButton
                         Content="{Binding Source={x:Static resx:Resources.left}}"
                         prop:RadioButtonClicked.RadioButton="{Binding MouseKey}"
                         Tag="left"
                         Grid.Row="4"
                         Style="{StaticResource RadioButtonStyle}"
                         ></RadioButton>
-                    <RadioButton
+                <RadioButton
                         Content="{Binding Source={x:Static resx:Resources.right}}"
                         prop:RadioButtonClicked.RadioButton="{Binding MouseKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Tag="right"
@@ -109,60 +103,59 @@
                         Style="{StaticResource RadioButtonStyle}"
                         ></RadioButton>
 
-                    <Label
+                <Label
                         Content="{Binding Source={x:Static resx:Resources.choosePro}}"
                         Grid.Row="5"
                         Grid.ColumnSpan="2"
                         HorizontalContentAlignment="Center"
                         ></Label>
 
-                    <ComboBox
+                <ComboBox
                         Grid.Row="6"
                         Grid.ColumnSpan="2"
                         ItemsSource="{Binding ProcessList}"
                         SelectedItem="{Binding SelectedProgram}"
                         >
-                        <ComboBox.ItemTemplate>
-                            <ItemContainerTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding AppIcon}"></Image>
-                                    <TextBlock 
+                    <ComboBox.ItemTemplate>
+                        <ItemContainerTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding AppIcon}"></Image>
+                                <TextBlock 
                                         Text="{Binding AppName}"
                                         VerticalAlignment="Center"
                                         ></TextBlock>
-                                </StackPanel>
-                            </ItemContainerTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                            </StackPanel>
+                        </ItemContainerTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
-                    <Label
+                <Label
                         Grid.Row="7"
                         Grid.ColumnSpan="2"
                         Content="{Binding Source={x:Static resx:Resources.time}}"
                         ></Label>
 
-                    <TextBox
+                <TextBox
                         Grid.Row="8"
                         Grid.ColumnSpan="2"
                         prop:TimeProperty.TimeBox="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ></TextBox>
 
-                    <Button
+                <Button
                         Grid.Row="9"
                         Command="{Binding Start}"
                         Style="{StaticResource buttonStyle}"
                         prop:ActionRunning.ActionIsRunning="{Binding StartIsRunning}"
                         ></Button>
-                    <Button
+                <Button
                         Content="{Binding Source={x:Static resx:Resources.stop}}"
                         Grid.Row="9"
                         Grid.Column="1"
                         Command="{Binding Stop}"
                         Style="{StaticResource buttonStyle2}"
                         ></Button>
-                    
-                </Grid>
-            </Border>
+
+            </Grid>
         </StackPanel>
     </Grid>
 </local:BasePage>

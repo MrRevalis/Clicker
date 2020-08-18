@@ -174,13 +174,12 @@ namespace Clicker.ViewModel
                 {
                     MousePosition.Add(new Position(position.X, position.Y));
                 }
-                    
             }
         }
 
         public async Task StartMethod()
         {
-            /*if (SelectedProgram != null && Time != string.Empty && MousePosition.Count >= 1 && MouseKey != string.Empty)
+            if (SelectedProgram != null && Time != string.Empty && MousePosition.Count >= 1 && MouseKey != string.Empty)
             {
                 TokenSource = new CancellationTokenSource();
                 Token = TokenSource.Token;
@@ -198,11 +197,7 @@ namespace Clicker.ViewModel
                   {
                       await Task.Run(() => StartClicking(Token), Token);
                   });
-            }*/
-            await RunCommand(() => this.StartIsRunning, async () =>
-            {
-                await Task.Delay(5000);
-            });
+            }
         }
 
         private void appClosed(object sender, EventArrivedEventArgs e)
@@ -227,9 +222,9 @@ namespace Clicker.ViewModel
                     foreach (Position x in MousePosition)
                     {
                         SmoothMouseMove(startPosition, x, 50, timeOfWait);
-                        Thread.Sleep(100);
                         MouseInput[0].mouseInput.dwFlags = MouseEvent.MOUSEEVENTF_RIGHTDOWN;
                         SendInput(1, ref MouseInput[0], Marshal.SizeOf(MouseInput[0]));
+                        Thread.Sleep(100);
                         MouseInput[0].mouseInput.dwFlags = MouseEvent.MOUSEEVENTF_RIGHTUP;
                         SendInput(1, ref MouseInput[0], Marshal.SizeOf(MouseInput[0]));
                         startPosition = x;
@@ -242,10 +237,10 @@ namespace Clicker.ViewModel
                     foreach (Position x in MousePosition)
                     {
                         SmoothMouseMove(startPosition, x, 50, timeOfWait);
-                        Thread.Sleep(100);
                         MouseInput[0].mouseInput.dwFlags = MouseEvent.MOUSEEVENTF_LEFTDOWN;
                         SendInput(1, ref MouseInput[0], Marshal.SizeOf(MouseInput[0]));
                         MouseInput[0].mouseInput.dwFlags = MouseEvent.MOUSEEVENTF_LEFTUP;
+                        Thread.Sleep(100);
                         SendInput(1, ref MouseInput[0], Marshal.SizeOf(MouseInput[0]));
                         startPosition = x;
                     }

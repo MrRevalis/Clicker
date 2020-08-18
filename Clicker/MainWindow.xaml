@@ -9,7 +9,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Auto-Clicker" 
-        Height="500" 
+        Height="440" 
         Width="300"
         ResizeMode="NoResize"
         WindowStyle="None"
@@ -127,6 +127,7 @@
     <Grid>
         <Frame 
             x:Name="MainFrame" 
+            Background="{StaticResource midnightGreenBrush}"
             Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"
             ></Frame>
     </Grid>

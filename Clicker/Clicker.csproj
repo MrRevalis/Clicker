@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\clickerIcon.ico</ApplicationIcon>
+    <ApplicationIcon>Images\cursor.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
@@ -170,6 +170,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\clickerIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\cursor.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
