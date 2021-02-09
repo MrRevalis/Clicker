@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
+
 namespace Clicker.ViewModel
 {
     using ViewModel.Base;
@@ -29,6 +30,7 @@ namespace Clicker.ViewModel
 
         private int mOuterMarginSize = 10;
         private int mWindowRadius = 10;
+        private int mInnerContentPadding = 0;
         private ApplicationPage currentPage = ApplicationPage.Clicker;
         #endregion
 
@@ -47,6 +49,7 @@ namespace Clicker.ViewModel
         public Thickness WindowPadding { get { return new Thickness(mOuterMarginSize); } }
         public double TitleBarHeight { get; set; } = 30;
         public GridLength TitleBarGridHeight { get { return new GridLength(TitleBarHeight + ResizeBorder); } }
+        public Thickness InnerContentPadding { get { return new Thickness(mInnerContentPadding); } }
         public ApplicationPage CurrentPage
         {
             get => currentPage;

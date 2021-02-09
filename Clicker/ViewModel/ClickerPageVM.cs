@@ -144,26 +144,25 @@ namespace Clicker.ViewModel
                                 listOfProcesses.Add(new Program(icon, p.Name, p.ProcessId, p.ExecutablePath));
                             }
                         }
-                        catch (Exception e) { }
+                        catch (Exception e) { Console.WriteLine($"Error program => {e}"); }
                     }
                 }
             }
             return listOfProcesses;
         }
 
-        private void RefreshListOfProcesses()
+        /*private void RefreshListOfProcesses()
         {
             while (true)
             {
                 ObservableCollection<Program> refreshList = GetListOfProcesses();
                 if (refreshList.Count != ProcessList.Count)
                 {
-
-
+                    ProcessList = refreshList;
                 }
                 Thread.Sleep(5000);
             }
-        }
+        }*/
 
         public void KeyClickedMethod()
         {
@@ -179,19 +178,21 @@ namespace Clicker.ViewModel
 
         public async Task StartMethod()
         {
-            if (SelectedProgram != null && Time != string.Empty && MousePosition.Count >= 1 && MouseKey != string.Empty)
+            if (Time != string.Empty && MousePosition.Count >= 1 && MouseKey != null)
             {
                 TokenSource = new CancellationTokenSource();
                 Token = TokenSource.Token;
 
-                IntPtr windowHandle = Process.GetProcessById((int)SelectedProgram.ProcessID).MainWindowHandle;
-                ShowWindow(windowHandle, ShowWindowCommands.Restore);
-                SetForegroundWindow(windowHandle);
+                if (SelectedProgram != null)
+                {
+                    IntPtr windowHandle = Process.GetProcessById((int)SelectedProgram.ProcessID).MainWindowHandle;
+                    ShowWindow(windowHandle, ShowWindowCommands.Restore);
+                    SetForegroundWindow(windowHandle);
+                }
 
                 ManagementEventWatcher watcher = new ManagementEventWatcher("Select * From Win32_ProcessStopTrace");
                 watcher.EventArrived += new EventArrivedEventHandler(appClosed);
                 watcher.Start();
-
 
                 await RunCommand(() => this.StartIsRunning, async () =>
                   {

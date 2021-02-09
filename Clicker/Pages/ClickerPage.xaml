@@ -89,7 +89,7 @@
 
                 <RadioButton
                         Content="{Binding Source={x:Static resx:Resources.left}}"
-                        prop:RadioButtonClicked.RadioButton="{Binding MouseKey}"
+                        prop:RadioButtonClicked.RadioButton="{Binding MouseKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Tag="left"
                         Grid.Row="4"
                         Style="{StaticResource RadioButtonStyle}"
